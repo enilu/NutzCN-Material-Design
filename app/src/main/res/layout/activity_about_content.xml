@@ -34,61 +34,6 @@
 
     </LinearLayout>
 
-    <View style="@style/AppTheme.DeepLine" />
-
-    <LinearLayout
-        android:id="@+id/about_btn_open_source_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:background="@drawable/selectable_item_background">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/open_source_url"
-            android:textColor="@color/text_color_primary"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/open_source_url_content"
-            android:textColor="@color/text_color_secondary"
-            android:textSize="14sp"
-            android:singleLine="true" />
-
-    </LinearLayout>
-
-    <View style="@style/AppTheme.DeepLine" />
-
-    <LinearLayout
-        android:id="@+id/about_btn_about_third_party_image_upload_api"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:background="@drawable/selectable_item_background">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/about_third_party_image_upload_api"
-            android:textColor="@color/text_color_primary"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/about_third_party_image_upload_api_content"
-            android:textColor="@color/text_color_secondary"
-            android:textSize="14sp"
-            android:singleLine="true" />
-
-    </LinearLayout>
 
     <View style="@style/AppTheme.DeepLine" />
 
@@ -147,47 +92,6 @@
     </LinearLayout>
 
     <View style="@style/AppTheme.ShadowGap" />
-
-    <LinearLayout
-        android:id="@+id/about_btn_advice_feedback"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:orientation="vertical"
-        android:background="@drawable/selectable_item_background">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/advice_feedback"
-            android:textColor="@color/text_color_primary"
-            android:textSize="16sp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="@string/advice_feedback_content"
-            android:textColor="@color/text_color_secondary"
-            android:textSize="14sp"
-            android:singleLine="true" />
-
-    </LinearLayout>
-
-    <View style="@style/AppTheme.ShadowGap" />
-
-    <TextView
-        android:id="@+id/about_btn_open_source_license"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="16dp"
-        android:text="@string/open_source_license"
-        android:textColor="@color/text_color_primary"
-        android:textSize="16sp"
-        android:background="@drawable/selectable_item_background" />
-
-    <View style="@style/AppTheme.ShadowGap" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
