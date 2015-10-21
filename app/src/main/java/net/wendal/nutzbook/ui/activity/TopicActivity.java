@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -225,10 +226,12 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
 
         private void replyTopicAsyncTask(final String content) {
             dialog.show();
+            Log.i("reply", content);
             ApiClient.service.replyTopic(LoginShared.getAccessToken(TopicActivity.this), topicId, content, null, new Callback<Map<String, String>>() {
 
                 @Override
                 public void success(Map<String, String> result, Response response) {
+                    Log.i("reply", result.toString());
                     dialog.dismiss();
                     // 本地创建一个回复对象
                     Reply reply = new Reply();

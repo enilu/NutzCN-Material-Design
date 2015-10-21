@@ -121,7 +121,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         recyclerView.setLayoutManager(linearLayoutManager);
         adapter = new MainAdapter(this, topicList);
         recyclerView.setAdapter(adapter);
-        recyclerView.addOnScrollListener(new RecyclerViewLoadMoreListener(linearLayoutManager, this, 20));
+        recyclerView.addOnScrollListener(new RecyclerViewLoadMoreListener(linearLayoutManager, this, MainAdapter.PAGE_SIZE));
         fabNewTopic.attachToRecyclerView(recyclerView);
 
         updateUserInfoViews();
@@ -217,7 +217,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     @Override
     public void onRefresh() {
         final TabType tab = currentTab;
-        ApiClient.service.getTopics(tab, 1, 20, false, new Callback<Result<List<Topic>>>() {
+        ApiClient.service.getTopics(tab, 1, MainAdapter.PAGE_SIZE, false, new Callback<Result<List<Topic>>>() {
 
             @Override
             public void success(Result<List<Topic>> result, Response response) {
@@ -249,7 +249,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
             final TabType tab = currentTab;
             final int page = currentPage;
-            ApiClient.service.getTopics(tab, page + 1, 20, false, new Callback<Result<List<Topic>>>() {
+            ApiClient.service.getTopics(tab, page + 1, MainAdapter.PAGE_SIZE, false, new Callback<Result<List<Topic>>>() {
 
                 @Override
                 public void success(Result<List<Topic>> result, Response response) {
@@ -284,7 +284,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * 更新列表
      */
     private void notifyDataSetChanged() {
-        if (topicList.size() < 20) {
+        if (topicList.size() < MainAdapter.PAGE_SIZE) {
             adapter.setLoading(false);
         }
         adapter.notifyDataSetChanged();

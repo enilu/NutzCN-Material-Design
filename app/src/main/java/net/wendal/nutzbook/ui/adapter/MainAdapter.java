@@ -1,6 +1,6 @@
 package net.wendal.nutzbook.ui.adapter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -27,16 +27,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
     private static final int TYPE_NORMAL = 0;
     private static final int TYPE_LOAD_MORE = 1;
+    public static int PAGE_SIZE = 12;
 
-    private Context context;
+    private Activity activity;
     private LayoutInflater inflater;
     private List<Topic> topicList;
 
     private boolean loading = false;
 
-    public MainAdapter(Context context, @NonNull List<Topic> topicList) {
-        this.context = context;
-        inflater = LayoutInflater.from(context);
+    public MainAdapter(Activity activity, @NonNull List<Topic> topicList) {
+        this.activity = activity;
+        inflater = LayoutInflater.from(activity);
         this.topicList = topicList;
     }
 
@@ -45,17 +46,17 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
     }
 
     public boolean canLoadMore() {
-        return topicList.size() >= 20 && !loading;
+        return topicList.size() >= PAGE_SIZE && !loading;
     }
 
     @Override
     public int getItemCount() {
-        return topicList.size() >= 20 ? topicList.size() + 1 : topicList.size();
+        return topicList.size() >= PAGE_SIZE ? topicList.size() + 1 : topicList.size();
     }
 
     @Override
     public int getItemViewType(int position) {
-        if (topicList.size() >= 20 && position == getItemCount() - 1) {
+        if (topicList.size() >= PAGE_SIZE && position == getItemCount() - 1) {
             return TYPE_LOAD_MORE;
         } else {
             return TYPE_NORMAL;
@@ -151,10 +152,10 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             tvTitle.setText(topic.getTitle());
             tvTab.setText(topic.isTop() ? R.string.tab_top : topic.getTab().getNameId());
             tvTab.setBackgroundResource(topic.isTop() ? R.drawable.topic_tab_top_background : R.drawable.topic_tab_normal_background);
-            tvTab.setTextColor(context.getResources().getColor(topic.isTop() ? android.R.color.white : R.color.text_color_secondary));
-            Picasso.with(context).load(topic.getAuthor().getAvatarUrl()).placeholder(R.drawable.image_placeholder).into(imgAvatar);
+            tvTab.setTextColor(activity.getResources().getColor(topic.isTop() ? android.R.color.white : R.color.text_color_secondary));
+            Picasso.with(activity).load(topic.getAuthor().getAvatarUrl()).placeholder(R.drawable.image_placeholder).into(imgAvatar);
             tvAuthor.setText(topic.getAuthor().getLoginName());
-            tvCreateTime.setText(context.getString(R.string.create_at_$) + topic.getCreateAt().toString("yyyy-MM-dd HH:mm:ss"));
+            tvCreateTime.setText(activity.getString(R.string.create_at_$) + topic.getCreateAt().toString("yyyy-MM-dd HH:mm:ss"));
             tvReplyCount.setText(String.valueOf(topic.getReplyCount()));
             tvVisitCount.setText(String.valueOf(topic.getVisitCount()));
             tvLastReplyTime.setText(FormatUtils.getRecentlyTimeText(topic.getLastReplyAt()));
@@ -163,12 +164,12 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         @OnClick(R.id.main_item_img_avatar)
         protected void onBtnAvatarClick() {
-            UserDetailActivity.open(context, topic.getAuthor().getLoginName());
+            UserDetailActivity.openWithTransitionAnimation(activity, topic.getAuthor().getLoginName(), imgAvatar);
         }
 
         @OnClick(R.id.main_item_btn_item)
         protected void onBtnItemClick() {
-            TopicActivity.open(context, topic.getId());
+            TopicActivity.open(activity, topic.getId());
         }
 
     }
