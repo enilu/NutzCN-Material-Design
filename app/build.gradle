@@ -21,7 +21,7 @@ android {
         applicationId "net.wendal.nutzbook"
         minSdkVersion 17
         targetSdkVersion 21
-        versionName "3.1.0"
+        versionName "3.1.1"
         manifestPlaceholders = [
                 UMENG_CHANNEL: "NutzCN",
                 UMENG_APPKEY : "5625df2367e58ea9bc002d22"
@@ -33,6 +33,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.NutzCN
+        }
+        debug {
+            signingConfig signingConfigs.NutzCN
         }
     }
     packagingOptions {
@@ -61,7 +65,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.github.rey5137:material:1.2.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile ('com.afollestad.material-dialogs:core:0.8.3.0@aar') { transitive = true }
+    compile('com.afollestad.material-dialogs:core:0.8.3.0@aar') { transitive = true }
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:1.0.0'

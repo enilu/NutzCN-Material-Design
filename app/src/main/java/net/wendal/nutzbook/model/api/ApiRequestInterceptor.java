@@ -15,6 +15,7 @@ public class ApiRequestInterceptor implements RequestInterceptor {
     public void intercept(RequestFacade request) {
         request.addHeader("Accept", APPLICATION_JSON);
         request.addHeader("User-Agent", USER_AGENT);
+        request.addHeader("Accept-Encoding", "gzip, deflate");
     }
 
 }
