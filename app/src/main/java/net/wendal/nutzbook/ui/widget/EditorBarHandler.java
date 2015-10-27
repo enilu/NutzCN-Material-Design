@@ -5,18 +5,30 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.wgs.picker.framework.ImagePicker;
 
 import net.wendal.nutzbook.R;
+import net.wendal.nutzbook.model.api.ApiClient;
 import net.wendal.nutzbook.storage.LoginShared;
 import net.wendal.nutzbook.storage.SettingShared;
 import net.wendal.nutzbook.ui.activity.MarkdownPreviewActivity;
+import net.wendal.nutzbook.util.BmpUtils;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit.Callback;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
+import retrofit.mime.TypedFile;
 
 public class EditorBarHandler {
 
@@ -164,10 +176,62 @@ public class EditorBarHandler {
     }
 
     private void insertPhotoDefaultAction() {
-        edtContent.requestFocus();
-        edtContent.getText().insert(edtContent.getSelectionEnd(), " ![Image](http://resource) ");
-        edtContent.setSelection(edtContent.getSelectionEnd() - 10, edtContent.getSelectionEnd() - 2);
-        imm.showSoftInput(edtContent, 0);
+        //一次只允许上传一张
+        ImagePicker.build(context, new ImagePicker.PickListener() {
+            @Override
+            public void onPickedSuccessfully(ArrayList<String> images) {
+                if(images.size() > 0){
+
+                    final MaterialDialog dialog = new MaterialDialog.Builder(context)
+                            .title("上传中...")
+                            .progress(true, 0)
+                            .build();
+                    dialog.show();
+
+                    File file = new File(images.get(0));
+                    if(file.isFile() && file.exists()){
+                        //压缩图片
+                        String newFilePath = BmpUtils.revisionImageSize(file.getAbsolutePath());
+                        File compressedFile = new File(newFilePath);
+                        //得到mime
+                        String mime = MimeTypeMap.getFileExtensionFromUrl(images.get(0));
+                        TypedFile tf = new TypedFile("image/" + mime, compressedFile);
+                        //开始上传
+                        ApiClient.service.uploadImage(LoginShared.getAccessToken(context), tf, new Callback<Map<String, String>>(){
+
+                            @Override
+                            public void success(Map<String, String> result, Response response) {
+                                //清除临时目录
+                                BmpUtils.deleteTempDir();
+                                dialog.dismiss();
+
+                                String url = result.get("url");
+                                //得到url, 插入到edit
+                                if(url != null){
+                                    edtContent.requestFocus();
+                                    edtContent.getText().insert(edtContent.getSelectionEnd(), " ![Image](" + url + ") ");
+                                    edtContent.setSelection(edtContent.getSelectionEnd() - 10, edtContent.getSelectionEnd() - 2);
+                                    imm.showSoftInput(edtContent, 0);
+                                }
+                            }
+
+                            @Override
+                            public void failure(RetrofitError error) {
+                                //清除临时目录
+                                BmpUtils.deleteTempDir();
+
+                                Toast.makeText(context, "图片上传失败:" + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                dialog.dismiss();
+                            }
+                        });
+                    }
+                }
+            }
+
+            @Override
+            public void onCancel() {}
+        }, 1).startActivity();
+
     }
 
     private void showThirdPartyImageUploadApiPermitDialog() {

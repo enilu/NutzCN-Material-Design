@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#000000">
+
+    <FrameLayout
+        android:id="@+id/fl_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="#212121"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="图片"
+            android:textColor="#ffffff"
+            android:textSize="18sp"/>
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:layout_gravity="center_vertical|right"
+            android:background="#225590"
+            android:text="完成"
+            android:textColor="#ffffff"
+            android:textSize="16sp"/>
+    </FrameLayout>
+
+
+    <GridView
+        android:id="@+id/gv_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/fl_top_bar"
+        android:cacheColorHint="@android:color/transparent"
+        android:clipChildren="true"
+        android:gravity="center"
+        android:horizontalSpacing="2dip"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="3"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dip"
+        >
+    </GridView>
+
+    <FrameLayout
+        android:id="@+id/fl_bottom_wrapper"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#d0212121"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+           >
+
+            <TextView
+                android:id="@+id/tv_image_folder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="所有图片"
+                android:minWidth="48dp"
+                android:textColor="@android:color/white"
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_toRightOf="@+id/tv_image_folder"
+
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="28dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/folder_more"/>
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right|center_vertical"
+            android:gravity="center"
+            android:text="0张"
+            android:textColor="@android:color/white"
+            android:textSize="18sp"/>
+    </FrameLayout>
+
+</RelativeLayout>
