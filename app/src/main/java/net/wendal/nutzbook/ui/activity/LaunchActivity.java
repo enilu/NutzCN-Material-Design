@@ -51,9 +51,8 @@ public class LaunchActivity extends BaseActivity implements Runnable {
         };
 
         int index = new Random().nextInt(sps.length);
-        Picasso.with(LaunchActivity.this).load(sps[index]).into(image);
         Animation animation = new AlphaAnimation(1.0f, 0.0f);
-        animation.setDuration(800);
+        animation.setDuration(1000);
         animation.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -70,6 +69,7 @@ public class LaunchActivity extends BaseActivity implements Runnable {
 
             }
         });
+        Picasso.with(LaunchActivity.this).load(sps[index]).into(image);
         foreMask.startAnimation(animation);
     }
 
