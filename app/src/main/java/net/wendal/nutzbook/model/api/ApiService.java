@@ -16,9 +16,12 @@ import retrofit.Callback;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
+import retrofit.mime.TypedFile;
 
 public interface ApiService {
 
@@ -108,6 +111,17 @@ public interface ApiService {
     void markAllMessageRead(
             @Field("accesstoken") String accessToken,
             Callback<Void> callback
+    );
+
+    //=========
+    // 图片上传
+    //=========
+    @Multipart
+    @POST("/v1/images")
+    void uploadImage(
+            @Query("accesstoken") String accessToken,
+            @Part("file") TypedFile image,
+            Callback<Map<String, String>> callback
     );
 
 }
