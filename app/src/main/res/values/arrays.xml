@@ -2,9 +2,10 @@
 <resources>
 
     <string-array name="tabs">
-        <item>@string/tab_share</item>
         <item>@string/tab_ask</item>
+        <item>@string/tab_share</item>
         <item>@string/tab_job</item>
+        <item>@string/tab_nb</item>
     </string-array>
 
 </resources>

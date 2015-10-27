@@ -118,14 +118,16 @@ public class NewTopicActivity extends BaseActivity implements Toolbar.OnMenuItem
 
     private TabType getTabByPosition(int position) {
         switch (position) {
-            case 0:
-                return TabType.share;
             case 1:
                 return TabType.ask;
+            case 0:
+                return TabType.share;
             case 2:
                 return TabType.job;
+            case 3:
+                return TabType.nb;
             default:
-                return TabType.share;
+                return TabType.ask;
         }
     }
 
