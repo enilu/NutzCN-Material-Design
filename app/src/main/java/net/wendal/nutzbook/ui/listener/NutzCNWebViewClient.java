@@ -25,7 +25,7 @@ public class NutzCNWebViewClient extends WebViewClient {
 
     private final Context context;
 
-    private NutzCNWebViewClient(Context context) {
+    protected NutzCNWebViewClient(Context context) {
         this.context = context.getApplicationContext();
     }
 
@@ -40,5 +40,4 @@ public class NutzCNWebViewClient extends WebViewClient {
         }
         return true;
     }
-
 }
