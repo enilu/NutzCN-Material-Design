@@ -185,6 +185,7 @@ public class EditorBarHandler {
                     final MaterialDialog dialog = new MaterialDialog.Builder(context)
                             .title("上传中...")
                             .progress(true, 0)
+                            .cancelable(false)
                             .build();
                     dialog.show();
 
@@ -210,7 +211,6 @@ public class EditorBarHandler {
                                 if(url != null){
                                     edtContent.requestFocus();
                                     edtContent.getText().insert(edtContent.getSelectionEnd(), " ![Image](" + url + ") ");
-                                    edtContent.setSelection(edtContent.getSelectionEnd() - 10, edtContent.getSelectionEnd() - 2);
                                     imm.showSoftInput(edtContent, 0);
                                 }
                             }

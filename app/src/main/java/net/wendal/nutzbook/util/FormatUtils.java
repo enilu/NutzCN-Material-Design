@@ -122,4 +122,20 @@ public final class FormatUtils {
         }
     }
 
+    public static String renderMarkdown2(String text) {
+        // 协议替换
+        text = text.replace("](/yvr/", "](https://nutz.cn/yvr/");
+        // 转换
+        StringWriter out = new StringWriter();
+        try {
+            md.transform(new StringReader(text), out);
+            text = out.toString();
+
+            // 生成完整html
+            return text;
+        } catch (ParseException e) {
+            return text;
+        }
+    }
+
 }
