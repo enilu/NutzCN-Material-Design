@@ -51,7 +51,7 @@ public class NutzCNWebView extends WebView {
         mOnScrollChangedCallback = onScrollChangedCallback;
     }
 
-    public static interface OnScrollChangedCallback{
+    public interface OnScrollChangedCallback{
         void onScroll(int l, int t);
     }
 

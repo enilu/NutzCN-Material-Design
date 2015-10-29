@@ -69,11 +69,7 @@ public class BmpUtils {
         }
         if (!flag) return false;
         //删除当前目录
-        if (dirFile.delete()) {
-            return true;
-        } else {
-            return false;
-        }
+        return dirFile.delete();
     }
 
 

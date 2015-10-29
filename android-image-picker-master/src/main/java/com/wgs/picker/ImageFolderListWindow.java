@@ -65,7 +65,7 @@ public class ImageFolderListWindow extends BasePopupWindow implements AdapterVie
     }
 
     public interface OnImageFolderSelectListener {
-        public void onSelected(ImageFolder folder);
+        void onSelected(ImageFolder folder);
     }
 }
 
