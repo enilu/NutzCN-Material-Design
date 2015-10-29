@@ -13,7 +13,7 @@ import com.squareup.picasso.Picasso;
 
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.model.entity.Topic;
-import net.wendal.nutzbook.ui.activity.TopicActivity2;
+import net.wendal.nutzbook.ui.activity.TopicActivity;
 import net.wendal.nutzbook.ui.activity.UserDetailActivity;
 import net.wendal.nutzbook.util.FormatUtils;
 
@@ -169,7 +169,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
 
         @OnClick(R.id.main_item_btn_item)
         protected void onBtnItemClick() {
-            TopicActivity2.open(activity, topic.getId());
+            TopicActivity.open(activity, topic.getId());
         }
 
     }

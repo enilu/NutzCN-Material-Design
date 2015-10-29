@@ -55,11 +55,6 @@
             android:label="@string/open_qrcode"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.activity.TopicActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/topic"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".ui.activity.NewTopicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/new_topic"
@@ -242,7 +237,7 @@
         </service>
 
         <activity
-            android:name=".ui.activity.TopicActivity2"
+            android:name=".ui.activity.TopicActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/topic"
             android:screenOrientation="portrait" />

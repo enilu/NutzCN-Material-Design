@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,11 +13,14 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebView;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
 
 import net.wendal.nutzbook.R;
@@ -27,14 +28,19 @@ import net.wendal.nutzbook.model.api.ApiClient;
 import net.wendal.nutzbook.model.entity.Author;
 import net.wendal.nutzbook.model.entity.Reply;
 import net.wendal.nutzbook.model.entity.Result;
+import net.wendal.nutzbook.model.entity.TopicUpInfo;
 import net.wendal.nutzbook.model.entity.TopicWithReply;
 import net.wendal.nutzbook.storage.LoginShared;
 import net.wendal.nutzbook.storage.SettingShared;
 import net.wendal.nutzbook.ui.adapter.TopicAdapter;
 import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
+import net.wendal.nutzbook.ui.listener.NutzCNWebViewClient;
 import net.wendal.nutzbook.ui.widget.EditorBarHandler;
+import net.wendal.nutzbook.ui.widget.NutzCNWebView;
 import net.wendal.nutzbook.ui.widget.RefreshLayoutUtils;
+import net.wendal.nutzbook.util.FormatUtils;
 import net.wendal.nutzbook.util.ShipUtils;
+
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
@@ -43,7 +49,6 @@ import java.util.Map;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -57,6 +62,8 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
         context.startActivity(intent);
     }
 
+    public static final String API = "nutz";
+
     @Bind(R.id.topic_layout_root)
     protected ViewGroup layoutRoot;
 
@@ -66,14 +73,11 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
     @Bind(R.id.topic_refresh_layout)
     protected SwipeRefreshLayout refreshLayout;
 
-    @Bind(R.id.topic_recycler_view)
-    protected RecyclerView recyclerView;
+    @Bind(R.id.topic_web_view)
+    protected NutzCNWebView webView;
 
     @Bind(R.id.topic_fab_reply)
     protected FloatingActionButton fabReply;
-
-    @Bind(R.id.topic_layout_no_data)
-    protected ViewGroup layoutNoData;
 
     private PopupWindow replyWindow;
     private ReplyHandler replyHandler;
@@ -83,25 +87,28 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
     private String topicId;
     private TopicWithReply topic;
 
-    private TopicAdapter adapter;
+    //话题模板
+    String template = "file:///android_asset/nutzcn/topic.html";
+    //用于标识是否渲染过web
+    boolean rendered = false;
+    //用户标识模板是否加载完成
+    boolean loaded = false;
+    //是否为刷新
+    boolean canRefresh = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_topic);
+        setContentView(R.layout.activity_topic2);
         ButterKnife.bind(this);
-
         topicId = getIntent().getStringExtra("topicId");
+
+        setupWebView();
 
         toolbar.setNavigationOnClickListener(new NavigationFinishClickListener(this));
         toolbar.inflateMenu(R.menu.topic);
         toolbar.setOnMenuItemClickListener(this);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new TopicAdapter(this, this);
-        recyclerView.setAdapter(adapter);
-
-        fabReply.attachToRecyclerView(recyclerView);
 
         // 创建回复窗口
         LayoutInflater inflater = LayoutInflater.from(this);
@@ -116,13 +123,48 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
         // - END -
 
         dialog = new MaterialDialog.Builder(this)
-                .content("正在发布中...")
+                .content("请稍后...")
                 .progress(true, 0)
                 .cancelable(false)
                 .build();
 
         RefreshLayoutUtils.initOnCreate(refreshLayout, this);
         RefreshLayoutUtils.refreshOnCreate(refreshLayout, this);
+    }
+
+    void setupWebView(){
+        //控制fabReply 显示/隐藏
+        webView.setOnScrollChangedCallback(new NutzCNWebView.OnScrollChangedCallback() {
+            int lastT = 0;
+
+            @Override
+            public void onScroll(int l, int t) {
+                //向下滑动, 隐藏
+                if (t - lastT >= 0) {
+                    if (fabReply.isVisible()) {
+                        if (t - lastT > 50) {
+                            fabReply.hide();
+                            lastT = t;
+                        }
+                    } else {
+                        lastT = t;
+                    }
+                } else {
+                    if (!fabReply.isVisible()) {
+                        if (t - lastT < -50) {
+                            fabReply.show();
+                            lastT = t;
+                        }
+                    } else {
+                        lastT = t;
+                    }
+                }
+            }
+        });
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setWebViewClient(new TopicWebViewClient(this));
+        webView.addJavascriptInterface(new TopicInterface(), API);
+        webView.loadUrl(template);
     }
 
     @Override
@@ -138,16 +180,20 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
 
     @Override
     public void onRefresh() {
-        ApiClient.service.getTopic(topicId, false, new Callback<Result<TopicWithReply>>() {
+        ApiClient.service.getTopic(topicId, true, new Callback<Result<TopicWithReply>>() {
 
             @Override
             public void success(Result<TopicWithReply> result, Response response) {
                 if (!isFinishing()) {
                     topic = result.getData();
-                    adapter.setTopic(result.getData());
-                    adapter.notifyDataSetChanged();
-                    layoutNoData.setVisibility(View.GONE);
-                    refreshLayout.setRefreshing(false);
+                    //模板加载完成,且没渲染
+                    if((loaded && !rendered) || canRefresh){
+                        rendered = true;
+                        canRefresh = true;
+                        webView.loadUrl("javascript:renderData(" + new Gson().toJson(topic) + ");");
+                    }
+                    //从js里停止
+                    //refreshLayout.setRefreshing(false);
                 }
             }
 
@@ -176,7 +222,19 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
     protected void onBtnReplyClick() {
         if (topic != null) {
             if (TextUtils.isEmpty(LoginShared.getAccessToken(this))) {
-                adapter.showNeedLoginDialog();
+                new MaterialDialog.Builder(this)
+                        .content(R.string.need_login_tip)
+                        .positiveText(R.string.login)
+                        .negativeText(R.string.cancel)
+                        .callback(new MaterialDialog.ButtonCallback() {
+
+                            @Override
+                            public void onPositive(MaterialDialog dialog) {
+                                startActivity(new Intent(TopicActivity.this, LoginActivity.class));
+                            }
+
+                        })
+                        .show();
             } else {
                 replyWindow.showAtLocation(layoutRoot, Gravity.BOTTOM, 0, 0);
             }
@@ -226,7 +284,6 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
 
         private void replyTopicAsyncTask(final String content) {
             dialog.show();
-            Log.i("reply", content);
             ApiClient.service.replyTopic(LoginShared.getAccessToken(TopicActivity.this), topicId, content, null, new Callback<Map<String, String>>() {
 
                 @Override
@@ -240,19 +297,14 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
                     author.setLoginName(LoginShared.getLoginName(TopicActivity.this));
                     author.setAvatarUrl(LoginShared.getAvatarUrl(TopicActivity.this));
                     reply.setAuthor(author);
-                    reply.setContent(content);
+                    reply.setContent(FormatUtils.renderMarkdown2(content));
                     reply.setCreateAt(new DateTime());
                     reply.setUps(new ArrayList<String>());
                     topic.getReplies().add(reply);
-                    // 更新adapter并让recyclerView滑动到最底部
                     replyWindow.dismiss();
-                    if (topic.getReplies().size() == 1) { // 需要全刷新
-                        adapter.notifyDataSetChanged();
-                    } else { // 插入刷新
-                        adapter.notifyItemChanged(topic.getReplies().size() - 1);
-                        adapter.notifyItemInserted(topic.getReplies().size());
-                    }
-                    recyclerView.smoothScrollToPosition(topic.getReplies().size());
+
+                    webView.loadUrl("javascript:addReply(" + new Gson().toJson(reply) + ");");
+
                     // 清空回复框内容
                     edtContent.setText(null);
                     // 提示
@@ -263,7 +315,10 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
                 public void failure(RetrofitError error) {
                     dialog.dismiss();
                     if (error.getResponse() != null && error.getResponse().getStatus() == 403) {
-                        adapter.showAccessTokenErrorDialog();
+                        new MaterialDialog.Builder(TopicActivity.this)
+                                .content(R.string.access_token_error_tip)
+                                .positiveText(R.string.confirm)
+                                .show();
                     } else {
                         Toast.makeText(TopicActivity.this, R.string.network_faild, Toast.LENGTH_SHORT).show();
                     }
@@ -273,4 +328,139 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
         }
 
     }
+
+    //点赞
+    private void upTopicAsyncTask(final String replyId) {
+        ApiClient.service.upTopic(LoginShared.getAccessToken(this), replyId, new Callback<TopicUpInfo>() {
+
+            @Override
+            public void success(TopicUpInfo info, Response response) {
+                webView.loadUrl("javascript:likeCallback(true, '" + replyId + "')");
+            }
+
+            @Override
+            public void failure(RetrofitError error) {
+                webView.loadUrl("javascript:likeCallback(false, '" + replyId + "')");
+                if (error.getResponse() != null && error.getResponse().getStatus() == 403) {
+                    new MaterialDialog.Builder(TopicActivity.this)
+                            .content(R.string.access_token_error_tip)
+                            .positiveText(R.string.confirm)
+                            .show();
+                } else {
+                    Toast.makeText(TopicActivity.this, "网络访问失败，请重试", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    //===================
+    // WebView interface
+    //===================
+
+    class TopicWebViewClient extends NutzCNWebViewClient{
+        protected TopicWebViewClient(Context context) {
+            super(context);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            //模板加载完毕
+            if(url.equals(template)){
+                loaded = true;
+                //有数据, 且没渲染
+                if(topic != null && !rendered){
+                    //render
+                    rendered = true;
+                    canRefresh = true;
+                    webView.loadUrl("javascript:renderData(" + new Gson().toJson(topic) + ");");
+                }
+            }
+            super.onPageFinished(view, url);
+        }
+    }
+
+    class TopicInterface{
+
+        //显示提示
+        @JavascriptInterface
+        public void toast(final String msg) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(TopicActivity.this, msg, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+        //用户名
+        @JavascriptInterface
+        public String loginName() {
+            return LoginShared.getLoginName(TopicActivity.this);
+        }
+
+        //用户id
+        @JavascriptInterface
+        public String loginId() {
+            return LoginShared.getId(TopicActivity.this);
+        }
+
+        //回复评论
+        @JavascriptInterface
+        public void replyComment(final String username, String replyId) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    onAt(username);
+                }
+            });
+        }
+
+        //查看用户详情
+        @JavascriptInterface
+        public void goUserInfo(final String username) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    UserDetailActivity.open(TopicActivity.this, username);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public void like(final String replyId){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    upTopicAsyncTask(replyId);
+                }
+            });
+        }
+
+        @JavascriptInterface
+        public String getNearDateStr(String originStr){
+            try{
+                if("undefined".equals(originStr)){
+                    return FormatUtils.getRecentlyTimeText(new DateTime());
+                }
+                return FormatUtils.getRecentlyTimeText(new DateTime(originStr));
+            }catch (Exception e){
+                e.printStackTrace();
+                return "未知";
+            }
+        }
+
+        @JavascriptInterface
+        public void stopRefresh(){
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    refreshLayout.setRefreshing(false);
+                }
+            });
+        }
+
+    }
+
+
+
 }
