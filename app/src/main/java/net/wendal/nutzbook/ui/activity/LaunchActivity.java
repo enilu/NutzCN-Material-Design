@@ -44,10 +44,7 @@ public class LaunchActivity extends BaseActivity implements Runnable {
 
         int[] sps = new int[]{
                 R.drawable.sp1,
-                R.drawable.sp2,
-                R.drawable.sp3,
-                R.drawable.sp4,
-                R.drawable.sp5
+                R.drawable.sp2
         };
 
         int index = new Random().nextInt(sps.length);

@@ -189,6 +189,11 @@
             android:enabled="true"
             android:exported="false" >
         </service>
+        <service
+            android:name="net.wendal.nutzbook.util.JpushRevicer"
+            android:enabled="true"
+            android:exported="false" >
+        </service>
         <!-- Required SDK核心功能 -->
         <receiver android:name="cn.jpush.android.service.AlarmReceiver" />
 
@@ -229,12 +234,6 @@
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="2d5a720c88aeb352eb9b1089" />
-
-        <service
-            android:name=".util.JpushRevicer"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
 
         <activity
             android:name=".ui.activity.TopicActivity"
