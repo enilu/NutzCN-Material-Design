@@ -32,7 +32,7 @@ android {
                 UMENG_APPKEY : "5625df2367e58ea9bc002d22"
         ]
         signingConfig signingConfigs.NutzCN
-        versionCode Integer.parseInt(year + month + day)
+        versionCode Integer.parseInt(year + month + day + "00")
     }
     buildTypes {
         release {
