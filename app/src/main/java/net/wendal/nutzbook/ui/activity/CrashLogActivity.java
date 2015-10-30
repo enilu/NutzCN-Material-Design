@@ -10,6 +10,7 @@ import android.widget.TextView;
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
 import net.wendal.nutzbook.util.ShipUtils;
+
 import org.joda.time.DateTime;
 
 import java.io.PrintWriter;
@@ -18,7 +19,6 @@ import java.io.Writer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 
 public class CrashLogActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 

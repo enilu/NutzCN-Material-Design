@@ -21,7 +21,6 @@ import net.wendal.nutzbook.ui.widget.EditorBarHandler;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

@@ -34,7 +34,6 @@ import net.wendal.nutzbook.ui.adapter.MainAdapter;
 import net.wendal.nutzbook.ui.listener.NavigationOpenClickListener;
 import net.wendal.nutzbook.ui.listener.RecyclerViewLoadMoreListener;
 import net.wendal.nutzbook.ui.widget.RefreshLayoutUtils;
-import net.wendal.nutzbook.util.FormatUtils;
 
 import java.util.ArrayList;
 import java.util.List;

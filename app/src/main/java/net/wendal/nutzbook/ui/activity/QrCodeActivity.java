@@ -14,7 +14,6 @@ import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 
 public class QrCodeActivity extends BaseActivity implements QRCodeReaderView.OnQRCodeReadListener {
 

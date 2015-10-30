@@ -23,14 +23,20 @@ public final class ApiClient {
 
     private ApiClient() {}
 
-    private static final String API_HOST = "https://nutz.cn/yvr/api";
+	public static String MAIN_HOST = "https://nutz.cn";
+	public static String CDN_HOST = "https://dn-nutzcn.qbox.me";
+	public static String URI_PREFIX_TOPIC = "/yvr/t/";
+	public static String URI_PREFIX_API = "/yvr/api"; // 不需要加/结尾
+	public static String URI_PREFIX_USER = "/yvr/user/";
+	public static String URI_PREFIX_IMAGES = "/yvr/upload/";
+    public static String API_Endpoint = MAIN_HOST + URI_PREFIX_API;
 
     public static final ApiService service;
 
     static {
         OkHttpClient client = new OkHttpClient();
         service = new RestAdapter.Builder()
-                .setEndpoint(API_HOST)
+                .setEndpoint(API_Endpoint)
                 .setConverter(new GsonConverter(GsonWrapper.gson))
                 .setRequestInterceptor(new ApiRequestInterceptor())
                 .setLogLevel(BuildConfig.DEBUG ? RestAdapter.LogLevel.FULL : RestAdapter.LogLevel.NONE)

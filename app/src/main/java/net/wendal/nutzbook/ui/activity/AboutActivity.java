@@ -1,12 +1,9 @@
 package net.wendal.nutzbook.ui.activity;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.afollestad.materialdialogs.MaterialDialog;
 import com.umeng.update.UmengUpdateAgent;
 
 import net.wendal.nutzbook.BuildConfig;
@@ -17,7 +14,6 @@ import net.wendal.nutzbook.util.ShipUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 
 public class AboutActivity extends BaseActivity {
 

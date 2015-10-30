@@ -3,7 +3,6 @@ package net.wendal.nutzbook.model.entity;
 import com.google.gson.annotations.SerializedName;
 
 import net.wendal.nutzbook.util.FormatUtils;
-import net.wendal.nutzbook.util.MarkdownUtils;
 
 import org.joda.time.DateTime;
 

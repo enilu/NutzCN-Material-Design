@@ -171,7 +171,7 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_open_in_browser:
-                ShipUtils.openInBrowser(this, "https://nutz.cn/yvr/t/" + topicId);
+                ShipUtils.openInBrowser(this, ApiClient.MAIN_HOST + ApiClient.URI_PREFIX_TOPIC + topicId);
                 return true;
             default:
                 return false;

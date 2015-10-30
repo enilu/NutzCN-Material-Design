@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.rey.material.widget.Switch;
 
@@ -15,7 +14,6 @@ import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 
 public class SettingActivity extends BaseActivity implements Switch.OnCheckedChangeListener {
 

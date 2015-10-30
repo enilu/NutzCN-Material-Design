@@ -11,7 +11,6 @@ import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 
 public class ModifyTopicSignActivity extends BaseActivity implements Toolbar.OnMenuItemClickListener {
 

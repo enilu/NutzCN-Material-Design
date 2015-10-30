@@ -4,7 +4,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.umeng.analytics.MobclickAgent;
 
-import cn.jpush.android.api.InstrumentedActivity;
 import cn.jpush.android.api.JPushInterface;
 
 public class BaseActivity extends AppCompatActivity {

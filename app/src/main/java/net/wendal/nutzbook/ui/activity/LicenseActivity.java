@@ -10,7 +10,6 @@ import net.wendal.nutzbook.util.DocumentUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import cn.jpush.android.api.JPushInterface;
 
 public class LicenseActivity extends BaseActivity {
 

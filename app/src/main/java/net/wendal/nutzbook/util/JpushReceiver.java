@@ -3,7 +3,6 @@ package net.wendal.nutzbook.util;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.JsonReader;
 import android.util.Log;
 
 import net.wendal.nutzbook.ui.activity.TopicActivity;

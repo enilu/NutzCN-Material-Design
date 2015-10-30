@@ -2,6 +2,8 @@ package net.wendal.nutzbook.storage;
 
 import android.content.Context;
 
+import net.wendal.nutzbook.model.api.ApiClient;
+
 import cn.jpush.android.api.JPushInterface;
 
 public final class SettingShared {
@@ -16,7 +18,7 @@ public final class SettingShared {
     private static final String KEY_TOPIC_SIGN_CONTENT = "topic_sign_content";
     private static final String KEY_ENABLE_THIRD_PARTY_IMAGE_UPLOAD_API = "third_party_image_upload_api";
 
-    public static final String DEFAULT_TOPIC_SIGN_CONTENT = "来自炫酷的 [NutzCN](https://nutz.cn)";
+    public static final String DEFAULT_TOPIC_SIGN_CONTENT = "来自炫酷的 [NutzCN](" + ApiClient.MAIN_HOST + ")";
 
     public static boolean isEnableNotification(Context context) {
         return SharedWrapper.with(context, TAG).getBoolean(KEY_ENABLE_NOTIFICATION, true);

@@ -2,6 +2,8 @@ package net.wendal.nutzbook.util;
 
 import android.text.TextUtils;
 
+import net.wendal.nutzbook.model.api.ApiClient;
+
 import org.joda.time.DateTime;
 import org.tautua.markdownpapers.Markdown;
 import org.tautua.markdownpapers.parser.ParseException;
@@ -103,12 +105,17 @@ public final class FormatUtils {
     private static final String HTML_2 = "\n" +
             "</body>\n" +
             "</html>";
+			
+	public static String replayProctoct(String text) {
+		// 协议替换
+        text = text.replace("]("+ApiClient.URI_PREFIX_TOPIC, "]("+ApiClient.MAIN_HOST+ApiClient.URI_PREFIX_TOPIC);
+		text = text.replace("]("+ ApiClient.URI_PREFIX_USER, "]("+ApiClient.MAIN_HOST+ApiClient.URI_PREFIX_USER);
+		text = text.replace("]("+ApiClient.URI_PREFIX_IMAGES, "]("+ApiClient.MAIN_HOST+ApiClient.URI_PREFIX_IMAGES);
+		return text;
+	}
 
     public static String renderMarkdown(String text) {
-        // 协议替换
-        //text = text.replace("](/user/", "](https://cnodejs.org/user/"); // TODO 替换@用户协议
-        //text = text.replace("](//dn-cnode.qbox.me/", "](https://dn-cnode.qbox.me/"); // TODO 替换CNode CDN图片路径
-        text = text.replace("](/yvr/", "](https://nutz.cn/yvr/");
+        text = replayProctoct(text);
         // 转换
         StringWriter out = new StringWriter();
         try {
@@ -124,7 +131,7 @@ public final class FormatUtils {
 
     public static String renderMarkdown2(String text) {
         // 协议替换
-        text = text.replace("](/yvr/", "](https://nutz.cn/yvr/");
+        text = replayProctoct(text);
         // 转换
         StringWriter out = new StringWriter();
         try {
