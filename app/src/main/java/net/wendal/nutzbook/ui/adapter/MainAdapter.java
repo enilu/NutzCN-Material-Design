@@ -155,7 +155,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.ViewHolder> {
             tvTab.setTextColor(activity.getResources().getColor(topic.isTop() ? android.R.color.white : R.color.text_color_secondary));
             Picasso.with(activity).load(topic.getAuthor().getAvatarUrl()).placeholder(R.drawable.image_placeholder).into(imgAvatar);
             tvAuthor.setText(topic.getAuthor().getLoginName());
-            tvCreateTime.setText(activity.getString(R.string.create_at_$) + topic.getCreateAt().toString("yyyy-MM-dd HH:mm:ss"));
+            tvCreateTime.setText(activity.getString(R.string.create_at_$) + FormatUtils.getRecentlyTimeText(topic.getCreateAt()));
             tvReplyCount.setText(String.valueOf(topic.getReplyCount()));
             tvVisitCount.setText(String.valueOf(topic.getVisitCount()));
             tvLastReplyTime.setText(FormatUtils.getRecentlyTimeText(topic.getLastReplyAt()));
