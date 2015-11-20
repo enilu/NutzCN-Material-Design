@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.message.PushAgent;
 
 import net.wendal.nutzbook.model.entity.LoginInfo;
 import net.wendal.nutzbook.model.entity.User;
@@ -30,13 +31,22 @@ public final class LoginShared {
 
     private static final String KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API = "permit_use_third_party_image_upload_api";
 
-    public static void login(Context context, String accessToken, @NonNull LoginInfo loginInfo) {
+    public static void login(final Context context, String accessToken, final @NonNull LoginInfo loginInfo) {
         Log.i("JPUSH", "alais=u_" + loginInfo.getId());
         SharedWrapper.with(context, TAG).setString(KEY_ACCESS_TOKEN, accessToken);
         SharedWrapper.with(context, TAG).setString(KEY_ID, loginInfo.getId());
         SharedWrapper.with(context, TAG).setString(KEY_LOGIN_NAME, loginInfo.getLoginName());
         SharedWrapper.with(context, TAG).setString(KEY_AVATAR_URL, loginInfo.getAvatarUrl());
-        JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
+        new Thread(){
+            public void run() {
+                JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
+                try {
+                    PushAgent.getInstance(context).addAlias("u_" + loginInfo.getId(), "nutzcn");
+                } catch (Exception e) {
+                    Log.w("umeng.push", e);
+                }
+            }
+        }.start();
         MobclickAgent.onProfileSignIn(loginInfo.getId());
     }
 

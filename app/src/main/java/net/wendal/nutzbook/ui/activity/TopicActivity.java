@@ -22,6 +22,12 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.gson.Gson;
 import com.melnykov.fab.FloatingActionButton;
+import com.umeng.socialize.controller.UMServiceFactory;
+import com.umeng.socialize.controller.UMSocialService;
+import com.umeng.socialize.media.QQShareContent;
+import com.umeng.socialize.media.QZoneShareContent;
+import com.umeng.socialize.sso.QZoneSsoHandler;
+import com.umeng.socialize.sso.UMQQSsoHandler;
 
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.model.api.ApiClient;
@@ -54,6 +60,8 @@ import retrofit.RetrofitError;
 import retrofit.client.Response;
 
 public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, TopicAdapter.OnAtClickListener, Toolbar.OnMenuItemClickListener {
+
+    UMSocialService mController = UMServiceFactory.getUMSocialService("com.umeng.share");
 
     public static void open(Context context, String topicId) {
         Intent intent = new Intent(context, TopicActivity.class);
@@ -130,6 +138,12 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
 
         RefreshLayoutUtils.initOnCreate(refreshLayout, this);
         RefreshLayoutUtils.refreshOnCreate(refreshLayout, this);
+
+        //参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
+        UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "101254640","d29cbc0ba12ea0b04acf2f3b8b2689ac");
+        qqSsoHandler.addToSocialSDK();
+        QZoneSsoHandler qZoneSsoHandler = new QZoneSsoHandler(this, "101254640", "d29cbc0ba12ea0b04acf2f3b8b2689ac");
+        qZoneSsoHandler.addToSocialSDK();
     }
 
     void setupWebView(){
@@ -169,10 +183,29 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
+        String url = ApiClient.MAIN_HOST + ApiClient.URI_PREFIX_TOPIC + topicId;
         switch (item.getItemId()) {
-            case R.id.action_open_in_browser:
-                ShipUtils.openInBrowser(this, ApiClient.MAIN_HOST + ApiClient.URI_PREFIX_TOPIC + topicId);
-                return true;
+            case R.id.action_umeng_share:
+                QQShareContent qqShareContent = new QQShareContent();
+                //设置分享文字
+                qqShareContent.setShareContent("来自Nutz社区");
+                //设置分享title
+                qqShareContent.setTitle(topic.getTitle());
+                //设置点击分享内容的跳转链接
+                qqShareContent.setTargetUrl(url);
+                mController.setShareMedia(qqShareContent);
+
+                QZoneShareContent qzone = new QZoneShareContent();
+                //设置分享文字
+                qzone.setShareContent("来自Nutz社区");
+                //设置点击消息的跳转URL
+                qzone.setTargetUrl(url);
+                //设置分享内容的标题
+                qzone.setTitle(topic.getTitle());
+                mController.setShareMedia(qzone);
+
+                mController.setShareContent(topic.getTitle() + " " + url);
+                mController.openShare(this, false);
             default:
                 return false;
         }

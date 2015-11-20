@@ -88,6 +88,7 @@
     <string name="default_topic_sign">默认尾巴</string>
 
     <string name="open_in_browser">在浏览器中打开</string>
+    <string name="umeng_share">分享...</string>
     <string name="send">发送</string>
     <string name="send_to_tab_$">发布到分类：</string>
 

@@ -1,11 +1,18 @@
 package net.wendal.nutzbook.ui.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -71,6 +78,42 @@ public class NewTopicActivity extends BaseActivity implements Toolbar.OnMenuItem
             edtTitle.setText(TopicShared.getNewTopicTitle(this));
             edtTitle.setSelection(edtTitle.length()); // 这个必须最后调用
         }
+
+        this.registerForContextMenu(findViewById(R.id.new_topic_edt_content));
+        mClipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
+    }
+
+
+    public ClipboardManager mClipboard;
+    final static int MENU_COPY = 1;
+    final static int MENU_PASTE =2;
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        //menu.add(Menu.NONE, MENU_COPY, Menu.NONE, "复制");
+        menu.add(Menu.NONE, MENU_PASTE, Menu.NONE, "粘贴");
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case MENU_PASTE :
+                if (!mClipboard.hasPrimaryClip()) {
+                    Toast.makeText(this, "剪贴板里面没内容", Toast.LENGTH_SHORT);
+                    return true;
+                }
+                ClipData clipData = mClipboard.getPrimaryClip();
+                int count = clipData.getItemCount();
+                if (count == 0)
+                    return true;
+                ClipData.Item t = clipData.getItemAt(0);
+                StringBuilder sb = new StringBuilder(edtContent.getText());
+                sb.insert(edtContent.getSelectionStart(), t.coerceToText(this));
+                edtContent.setText(sb.toString(), TextView.BufferType.EDITABLE);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
 
     /**
@@ -117,9 +160,9 @@ public class NewTopicActivity extends BaseActivity implements Toolbar.OnMenuItem
 
     private TabType getTabByPosition(int position) {
         switch (position) {
-            case 1:
-                return TabType.ask;
             case 0:
+                return TabType.ask;
+            case 1:
                 return TabType.share;
             case 2:
                 return TabType.job;
