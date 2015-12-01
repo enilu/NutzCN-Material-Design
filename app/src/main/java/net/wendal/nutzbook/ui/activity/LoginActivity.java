@@ -42,10 +42,14 @@ public class LoginActivity extends BaseActivity {
 
     @OnClick(R.id.login_btn_login)
     protected void onBtnLoginClick() {
-        if (edtAccessToken.getText().length() < 1) {
+        String tk = edtAccessToken.getText().toString().trim();
+        if (tk.length() < 1) {
             edtAccessToken.setError("令牌格式错误");
         } else {
-
+            if (tk.startsWith("http:")) {
+                Toast.makeText(getApplicationContext(), "这不是令牌,请查看个人主页" , Toast.LENGTH_SHORT);
+                return;
+            }
             final MaterialDialog dialog = new MaterialDialog.Builder(this)
                     .content("正在登录中...")
                     .progress(true, 0)
