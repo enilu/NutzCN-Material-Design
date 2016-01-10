@@ -124,4 +124,11 @@ public interface ApiService {
             Callback<Map<String, String>> callback
     );
 
+    /**
+     * 获取上传到七牛的token
+     */
+    @POST("/v1/videos")
+    void uploadVideo(
+            @Query("accesstoken") String accessToken
+    );
 }

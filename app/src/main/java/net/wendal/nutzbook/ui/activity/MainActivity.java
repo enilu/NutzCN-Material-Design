@@ -24,6 +24,7 @@ import com.umeng.update.UmengUpdateAgent;
 
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.model.api.ApiClient;
+import net.wendal.nutzbook.model.api.ApiRequestInterceptor;
 import net.wendal.nutzbook.model.api.CallbackAdapter;
 import net.wendal.nutzbook.model.entity.Result;
 import net.wendal.nutzbook.model.entity.TabType;
@@ -108,6 +109,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ApiRequestInterceptor.ctx = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
