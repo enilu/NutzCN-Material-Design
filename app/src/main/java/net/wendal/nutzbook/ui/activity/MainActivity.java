@@ -48,7 +48,7 @@ import retrofit.client.Response;
 
 public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener, RecyclerViewLoadMoreListener.OnLoadMoreListener {
 
-    private static final int REQUEST_LOGIN = 1024;
+    public static final int REQUEST_LOGIN = 1024;
 
     // 抽屉导航布局
     @Bind(R.id.main_drawer_layout)
@@ -75,9 +75,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             R.id.main_nav_btn_ask,
             R.id.main_nav_btn_news,
             R.id.main_nav_btn_share,
-            R.id.main_nav_btn_nb,
-            R.id.main_nav_btn_shortit,
-            R.id.main_nav_btn_job
+            //R.id.main_nav_btn_nb,
+            //R.id.main_nav_btn_shortit,
+            //R.id.main_nav_btn_job
     })
     protected List<CheckedTextView> navMainItemList;
 
@@ -297,27 +297,27 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             R.id.main_nav_btn_ask,
             R.id.main_nav_btn_news,
             R.id.main_nav_btn_share,
-            R.id.main_nav_btn_nb,
-            R.id.main_nav_btn_shortit,
-            R.id.main_nav_btn_job
+            //R.id.main_nav_btn_nb,
+            //R.id.main_nav_btn_shortit,
+            //R.id.main_nav_btn_job
     })
     public void onNavigationMainItemClick(CheckedTextView itemView) {
         switch (itemView.getId()) {
-            case R.id.main_nav_btn_nb:
-                drawerLayout.setDrawerListener(tabNBDrawerListener);
-                break;
-            case R.id.main_nav_btn_shortit:
-                drawerLayout.setDrawerListener(tabShortitDrawerListener);
-                break;
+//            case R.id.main_nav_btn_nb:
+//                drawerLayout.setDrawerListener(tabNBDrawerListener);
+//                break;
+//            case R.id.main_nav_btn_shortit:
+//                drawerLayout.setDrawerListener(tabShortitDrawerListener);
+//                break;
             case R.id.main_nav_btn_share:
                 drawerLayout.setDrawerListener(tabShareDrawerListener);
                 break;
             case R.id.main_nav_btn_ask:
                 drawerLayout.setDrawerListener(tabAskDrawerListener);
                 break;
-            case R.id.main_nav_btn_job:
-                drawerLayout.setDrawerListener(tabJobDrawerListener);
-                break;
+//            case R.id.main_nav_btn_job:
+//                drawerLayout.setDrawerListener(tabJobDrawerListener);
+//                break;
             case R.id.main_nav_btn_news:
                 drawerLayout.setDrawerListener(tabNewsDrawerListener);
                 break;
