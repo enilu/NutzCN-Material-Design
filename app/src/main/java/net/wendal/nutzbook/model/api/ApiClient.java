@@ -23,7 +23,8 @@ public final class ApiClient {
 
     private ApiClient() {}
 
-	public static String MAIN_HOST = "https://nutz.cn";
+    public static String MAIN_HOST = "https://nutz.cn";
+	//public static String MAIN_HOST = "http://192.168.72.113:8080/nutzbook";
 	public static String CDN_HOST = "https://dn-nutzcn.qbox.me";
 	public static String URI_PREFIX_TOPIC = "/yvr/t/";
 	public static String URI_PREFIX_API = "/yvr/api"; // 不需要加/结尾
