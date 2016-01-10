@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-import com.umeng.message.PushAgent;
 
 import net.wendal.nutzbook.BuildConfig;
 import net.wendal.nutzbook.R;
@@ -32,8 +31,6 @@ public class LaunchActivity extends BaseActivity implements Runnable {
         JPushInterface.init(this);
         JPushInterface.setDebugMode(BuildConfig.DEBUG);
         setContentView(R.layout.activity_launch);
-        PushAgent mPushAgent = PushAgent.getInstance(this);
-        mPushAgent.enable();
         setupSplashImage();
     }
 

@@ -47,7 +47,12 @@ public class LoginActivity extends BaseActivity {
             edtAccessToken.setError("令牌格式错误");
         } else {
             if (tk.startsWith("http:")) {
-                Toast.makeText(getApplicationContext(), "这不是令牌,请查看个人主页" , Toast.LENGTH_SHORT);
+                final MaterialDialog dialog = new MaterialDialog.Builder(this)
+                        .content("这不是令牌,请到个人主页查看二维码")
+                        .progress(true, 0)
+                        .build();
+                dialog.show();
+                edtAccessToken.setText("请到个人主页查看二维码");
                 return;
             }
             final MaterialDialog dialog = new MaterialDialog.Builder(this)

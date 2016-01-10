@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
-import com.umeng.message.PushAgent;
 
 import net.wendal.nutzbook.model.entity.LoginInfo;
 import net.wendal.nutzbook.model.entity.User;
@@ -37,16 +36,7 @@ public final class LoginShared {
         SharedWrapper.with(context, TAG).setString(KEY_ID, loginInfo.getId());
         SharedWrapper.with(context, TAG).setString(KEY_LOGIN_NAME, loginInfo.getLoginName());
         SharedWrapper.with(context, TAG).setString(KEY_AVATAR_URL, loginInfo.getAvatarUrl());
-        new Thread(){
-            public void run() {
-                JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
-                try {
-                    PushAgent.getInstance(context).addAlias("u_" + loginInfo.getId(), "nutzcn");
-                } catch (Exception e) {
-                    Log.w("umeng.push", e);
-                }
-            }
-        }.start();
+        JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
         MobclickAgent.onProfileSignIn(loginInfo.getId());
     }
 

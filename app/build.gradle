@@ -28,7 +28,7 @@ android {
         applicationId "net.wendal.nutzbook"
         minSdkVersion 17
         targetSdkVersion 21
-        versionName "3.2.1"
+        versionName "3.2.2"
         manifestPlaceholders = [
                 UMENG_CHANNEL: "NutzCN",
                 UMENG_APPKEY : "5625df2367e58ea9bc002d22",
