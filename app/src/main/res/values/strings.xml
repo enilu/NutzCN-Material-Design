@@ -72,14 +72,13 @@
     <string name="open_in_app_store_content">觉得赞就给个好评吧！</string>
     <string name="go_to_app_store">去评分</string>
     <string name="open_source_license">开放源代码许可</string>
-    <string name="about_copyright">Copyright © 2015&#8211;2016 TakWolf, Wendal.
-        包含极光推送，版权所有(c) 2012, 深圳市和讯华谷信息技术有限公司。</string>
+    <string name="about_copyright">Copyright © 2015&#8211;2016 TakWolf, Wendal.</string>
 
     <string name="mark_all_read">全部标记为已读</string>
 
     <string name="notice">通知</string>
     <string name="receive_notification">接收消息推送</string>
-    <string name="receive_notification_summary">JPush做的</string>
+    <string name="receive_notification_summary">原本是JPush,改成小米推送了</string>
     <string name="new_topic_draft">保存草稿</string>
     <string name="new_topic_draft_summary">没有发布的话题内容会被保存</string>
     <string name="topic_sign">话题小尾巴</string>

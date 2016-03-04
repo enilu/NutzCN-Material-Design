@@ -6,13 +6,12 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.umeng.analytics.MobclickAgent;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import net.wendal.nutzbook.model.entity.LoginInfo;
 import net.wendal.nutzbook.model.entity.User;
 
 import org.joda.time.DateTime;
-
-import cn.jpush.android.api.JPushInterface;
 
 public final class LoginShared {
 
@@ -36,7 +35,8 @@ public final class LoginShared {
         SharedWrapper.with(context, TAG).setString(KEY_ID, loginInfo.getId());
         SharedWrapper.with(context, TAG).setString(KEY_LOGIN_NAME, loginInfo.getLoginName());
         SharedWrapper.with(context, TAG).setString(KEY_AVATAR_URL, loginInfo.getAvatarUrl());
-        JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
+        //JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
+        MiPushClient.setAlias(context, "u_" + loginInfo.getId(), null);
         MobclickAgent.onProfileSignIn(loginInfo.getId());
     }
 

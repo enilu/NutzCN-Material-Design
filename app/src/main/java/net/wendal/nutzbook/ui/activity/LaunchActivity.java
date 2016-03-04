@@ -10,13 +10,11 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import net.wendal.nutzbook.BuildConfig;
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.util.HandlerUtils;
 
 import java.util.Random;
 
-import cn.jpush.android.api.JPushInterface;
 
 public class LaunchActivity extends BaseActivity implements Runnable {
 
@@ -28,8 +26,6 @@ public class LaunchActivity extends BaseActivity implements Runnable {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        JPushInterface.init(this);
-        JPushInterface.setDebugMode(BuildConfig.DEBUG);
         setContentView(R.layout.activity_launch);
         setupSplashImage();
     }

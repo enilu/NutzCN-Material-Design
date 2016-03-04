@@ -21,6 +21,7 @@ import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
 import com.umeng.update.UmengUpdateAgent;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.model.api.ApiClient;
@@ -42,7 +43,6 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import cn.jpush.android.api.JPushInterface;
 import retrofit.Callback;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
@@ -76,9 +76,9 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             R.id.main_nav_btn_ask,
             R.id.main_nav_btn_news,
             R.id.main_nav_btn_share,
-            //R.id.main_nav_btn_nb,
-            //R.id.main_nav_btn_shortit,
-            //R.id.main_nav_btn_job
+            R.id.main_nav_btn_nb,
+            R.id.main_nav_btn_shortit,
+            R.id.main_nav_btn_job
     })
     protected List<CheckedTextView> navMainItemList;
 
@@ -133,9 +133,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         // 友盟更新
         UmengUpdateAgent.update(this);
 
-        Log.i("JPUSH", "alais=u_" + LoginShared.getId(this));
+        Log.i("xmpush", "alais=u_" + LoginShared.getId(this));
         if (LoginShared.getId(this) != null) {
-            JPushInterface.setAlias(this, "u_"+LoginShared.getId(this), null);
+            //JPushInterface.setAlias(this, "u_"+LoginShared.getId(this), null);
+            MiPushClient.setAlias(this, "u_"+LoginShared.getId(this), null);
         }
     }
 
@@ -299,27 +300,27 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             R.id.main_nav_btn_ask,
             R.id.main_nav_btn_news,
             R.id.main_nav_btn_share,
-            //R.id.main_nav_btn_nb,
-            //R.id.main_nav_btn_shortit,
-            //R.id.main_nav_btn_job
+            R.id.main_nav_btn_nb,
+            R.id.main_nav_btn_shortit,
+            R.id.main_nav_btn_job
     })
     public void onNavigationMainItemClick(CheckedTextView itemView) {
         switch (itemView.getId()) {
-//            case R.id.main_nav_btn_nb:
-//                drawerLayout.setDrawerListener(tabNBDrawerListener);
-//                break;
-//            case R.id.main_nav_btn_shortit:
-//                drawerLayout.setDrawerListener(tabShortitDrawerListener);
-//                break;
+            case R.id.main_nav_btn_nb:
+                drawerLayout.setDrawerListener(tabNBDrawerListener);
+                break;
+            case R.id.main_nav_btn_shortit:
+                drawerLayout.setDrawerListener(tabShortitDrawerListener);
+                break;
             case R.id.main_nav_btn_share:
                 drawerLayout.setDrawerListener(tabShareDrawerListener);
                 break;
             case R.id.main_nav_btn_ask:
                 drawerLayout.setDrawerListener(tabAskDrawerListener);
                 break;
-//            case R.id.main_nav_btn_job:
-//                drawerLayout.setDrawerListener(tabJobDrawerListener);
-//                break;
+            case R.id.main_nav_btn_job:
+                drawerLayout.setDrawerListener(tabJobDrawerListener);
+                break;
             case R.id.main_nav_btn_news:
                 drawerLayout.setDrawerListener(tabNewsDrawerListener);
                 break;

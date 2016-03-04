@@ -2,9 +2,9 @@ package net.wendal.nutzbook.storage;
 
 import android.content.Context;
 
-import net.wendal.nutzbook.model.api.ApiClient;
+import com.xiaomi.mipush.sdk.MiPushClient;
 
-import cn.jpush.android.api.JPushInterface;
+import net.wendal.nutzbook.model.api.ApiClient;
 
 public final class SettingShared {
 
@@ -27,9 +27,9 @@ public final class SettingShared {
     public static void setEnableNotification(Context context, boolean enable) {
         SharedWrapper.with(context, TAG).setBoolean(KEY_ENABLE_NOTIFICATION, enable);
         if (enable)
-            JPushInterface.resumePush(context);
+            MiPushClient.resumePush(context, null);
         else
-            JPushInterface.stopPush(context);
+            MiPushClient.pausePush(context, null);
     }
 
     public static boolean isEnableNewTopicDraft(Context context) {
