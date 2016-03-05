@@ -28,7 +28,7 @@ android {
         applicationId "net.wendal.nutzbook"
         minSdkVersion 17
         targetSdkVersion 22
-        versionName "3.2.4"
+        versionName "3.2.5"
         manifestPlaceholders = [
                 UMENG_CHANNEL: "NutzCN",
                 UMENG_APPKEY : "5625df2367e58ea9bc002d22",
@@ -38,6 +38,7 @@ android {
         ]
         signingConfig signingConfigs.NutzCN
         versionCode Integer.parseInt(tt)
+        vectorDrawables.useSupportLibrary = true
     }
     buildTypes {
         release {
@@ -68,7 +69,7 @@ android {
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    compile 'com.android.support:design:23.1.1'
+    compile 'com.android.support:design:23.2.0'
     compile 'com.jakewharton:butterknife:7.0.1'
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'joda-time:joda-time:2.8.1'
