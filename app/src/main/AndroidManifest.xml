@@ -97,7 +97,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_crash"
             android:screenOrientation="portrait" />
-        
+
         <!-- xiaomi push -->
         <service
             android:enabled="true"

@@ -29,8 +29,6 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionName "3.2.8"
-        manifestPlaceholders = [
-        ]
         signingConfig signingConfigs.NutzCN
         versionCode Integer.parseInt(tt)
         vectorDrawables.useSupportLibrary = true
