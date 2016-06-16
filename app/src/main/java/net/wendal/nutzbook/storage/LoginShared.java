@@ -5,7 +5,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.umeng.analytics.MobclickAgent;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import net.wendal.nutzbook.model.entity.LoginInfo;
@@ -37,7 +36,6 @@ public final class LoginShared {
         SharedWrapper.with(context, TAG).setString(KEY_AVATAR_URL, loginInfo.getAvatarUrl());
         //JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
         MiPushClient.setAlias(context, "u_" + loginInfo.getId(), null);
-        MobclickAgent.onProfileSignIn(loginInfo.getId());
     }
 
     public static void update(Context context, @NonNull User user) {

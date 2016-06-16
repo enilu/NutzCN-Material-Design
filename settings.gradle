@@ -1,1 +1,1 @@
-include ':app', ':umeng-update-sdk', ':android-image-picker-master'
+include ':app', ':android-image-picker-master'

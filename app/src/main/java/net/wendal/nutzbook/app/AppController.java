@@ -2,9 +2,13 @@ package net.wendal.nutzbook.app;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.umeng.update.UpdateConfig;
 import com.xiaomi.mipush.sdk.MiPushClient;
+import com.xiaomi.market.sdk.*;
 
 import net.wendal.nutzbook.BuildConfig;
 
@@ -27,11 +31,31 @@ public class AppController extends Application {
                 Thread.setDefaultUncaughtExceptionHandler(new AppExceptionHandler(this));
             }
 
-            // 配置友盟更新日志
-            UpdateConfig.setDebug(BuildConfig.DEBUG);
-
             try {
                 MiPushClient.registerPush(this, "2882303761517440917", "5841744096917");
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+
+            try {
+                XiaomiUpdateAgent.setUpdateListener(new XiaomiUpdateListener() {
+                    public void onUpdateReturned(int updateStatus, UpdateResponse updateInfo) {
+                        switch (updateStatus) {
+                            case UpdateStatus.STATUS_UPDATE:
+                                XiaomiUpdateAgent.arrange();
+                                break;
+                            case UpdateStatus.STATUS_NO_UPDATE:
+                                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Toast.makeText(context, "暂无更新", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                                break;
+                        }
+                    }
+                });
+                XiaomiUpdateAgent.update(this);
             } catch (Exception e){
                 e.printStackTrace();
             }

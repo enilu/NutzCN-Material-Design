@@ -20,7 +20,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
-import com.umeng.update.UmengUpdateAgent;
 import com.xiaomi.mipush.sdk.MiPushClient;
 
 import net.wendal.nutzbook.R;
@@ -130,8 +129,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         RefreshLayoutUtils.initOnCreate(refreshLayout, this);
         RefreshLayoutUtils.refreshOnCreate(refreshLayout, this);
 
-        // 友盟更新
-        UmengUpdateAgent.update(this);
+        // fir.im更新
 
         Log.i("xmpush", "alais=u_" + LoginShared.getId(this));
         if (LoginShared.getId(this) != null) {

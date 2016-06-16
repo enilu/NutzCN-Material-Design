@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 
-import com.umeng.update.UmengUpdateAgent;
-
 import net.wendal.nutzbook.BuildConfig;
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
@@ -14,6 +12,7 @@ import net.wendal.nutzbook.util.ShipUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import com.xiaomi.market.sdk.*;
 
 public class AboutActivity extends BaseActivity {
 
@@ -38,7 +37,9 @@ public class AboutActivity extends BaseActivity {
 
     @OnClick(R.id.about_btn_version)
     protected void onBtnVersionClick() {
-        UmengUpdateAgent.forceUpdate(this);
+        try {
+            XiaomiUpdateAgent.update(this);
+        } catch (Exception e){}
     }
 
 //    @OnClick(R.id.about_btn_open_source_url)
