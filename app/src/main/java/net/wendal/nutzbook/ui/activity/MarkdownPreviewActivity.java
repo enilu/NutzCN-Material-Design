@@ -39,4 +39,8 @@ public class MarkdownPreviewActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public String name() {
+        return "预览界面";
+    }
 }

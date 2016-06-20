@@ -488,6 +488,9 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
 
     }
 
-
+    @Override
+    public String name() {
+        return "帖子详情页";
+    }
 
 }

@@ -206,4 +206,9 @@ public class UserDetailActivity extends BaseActivity {
             ShipUtils.openInBrowser(this, "https://github.com/" + githubUsername);
         }
     }
+
+    @Override
+    public String name() {
+        return "用户详情页";
+    }
 }

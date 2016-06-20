@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Build;
 
 import com.google.zxing.common.StringUtils;
+import com.xiaomi.mistatistic.sdk.MiStatInterface;
 
 import net.wendal.nutzbook.BuildConfig;
 import net.wendal.nutzbook.storage.LoginShared;
@@ -31,6 +32,7 @@ public class ApiRequestInterceptor implements RequestInterceptor {
             String loginname = LoginShared.getLoginName(ctx);
             if (at != null && at.trim().length() > 10) {
                 try {
+                    MiStatInterface.recordStringPropertyEvent("apicall", "loginname", loginname);
                     long time = System.currentTimeMillis();
                     MessageDigest digest = MessageDigest.getInstance("SHA-1");
                     String uuid = UUID.randomUUID().toString().toLowerCase();

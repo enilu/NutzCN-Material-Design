@@ -103,4 +103,8 @@ public class SettingActivity extends BaseActivity implements Switch.OnCheckedCha
     protected void onBtnModifyTopicSignClick() {
         startActivity(new Intent(this, ModifyTopicSignActivity.class));
     }
+    @Override
+    public String name() {
+        return "配置界面";
+    }
 }

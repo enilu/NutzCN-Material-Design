@@ -92,11 +92,6 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/open_source_license"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".ui.activity.CrashLogActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/app_crash"
-            android:screenOrientation="portrait" />
 
         <!-- xiaomi push -->
         <service

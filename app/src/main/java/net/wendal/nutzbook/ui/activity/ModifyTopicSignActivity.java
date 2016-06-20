@@ -52,4 +52,8 @@ public class ModifyTopicSignActivity extends BaseActivity implements Toolbar.OnM
         SettingShared.setTopicSignContent(this, edtContent.getText().toString());
     }
 
+    @Override
+    public String name() {
+        return "修改小尾巴界面";
+    }
 }

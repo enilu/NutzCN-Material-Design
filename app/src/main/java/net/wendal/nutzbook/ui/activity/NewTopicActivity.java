@@ -209,4 +209,8 @@ public class NewTopicActivity extends BaseActivity implements Toolbar.OnMenuItem
                 .positiveText(R.string.confirm)
                 .show();
     }
+    @Override
+    public String name() {
+        return "发新贴";
+    }
 }

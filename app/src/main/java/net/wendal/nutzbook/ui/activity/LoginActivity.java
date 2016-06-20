@@ -106,4 +106,8 @@ public class LoginActivity extends BaseActivity {
             edtAccessToken.setSelection(edtAccessToken.length());
         }
     }
+    @Override
+    public String name() {
+        return "登陆界面";
+    }
 }

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.market.sdk.*;
+import com.xiaomi.mistatistic.sdk.*;
 
 import net.wendal.nutzbook.BuildConfig;
 
@@ -20,19 +21,18 @@ public class AppController extends Application {
         return context;
     }
 
+    public static String MY_APPID = "2882303761517440917";
+    public static String MY_APP_KEY = "5841744096917";
+    public static String CHANNEL = "NUTZCN";
+
     @Override
     public void onCreate() {
         super.onCreate();
         if (context == null) {
             context = this;
 
-            // 配置全局异常捕获
-            if (!BuildConfig.DEBUG) {
-                Thread.setDefaultUncaughtExceptionHandler(new AppExceptionHandler(this));
-            }
-
             try {
-                MiPushClient.registerPush(this, "2882303761517440917", "5841744096917");
+                MiPushClient.registerPush(this, MY_APPID, MY_APP_KEY);
             } catch (Exception e){
                 e.printStackTrace();
             }
@@ -59,6 +59,11 @@ public class AppController extends Application {
             } catch (Exception e){
                 e.printStackTrace();
             }
+
+            try {
+                MiStatInterface.initialize(this, MY_APPID, MY_APP_KEY, CHANNEL);
+                MiStatInterface.enableExceptionCatcher(true);
+            } catch (Exception e){}
         }
     }
 

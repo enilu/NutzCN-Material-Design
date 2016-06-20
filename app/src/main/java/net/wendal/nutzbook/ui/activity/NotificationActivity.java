@@ -145,4 +145,8 @@ public class NotificationActivity extends BaseActivity implements Toolbar.OnMenu
 
         });
     }
+    @Override
+    public String name() {
+        return "消息提醒";
+    }
 }

@@ -18,6 +18,11 @@ import java.util.Random;
 
 public class LaunchActivity extends BaseActivity implements Runnable {
 
+    @Override
+    public String name() {
+        return "启动";
+    }
+
     ImageView image;
     TextView title;
     View foreMask;

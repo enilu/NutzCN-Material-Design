@@ -512,4 +512,8 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
             }
         }
     }
+    @Override
+    public String name() {
+        return "主界面";
+    }
 }

@@ -25,6 +25,11 @@ public class AboutActivity extends BaseActivity {
     protected TextView tvVersion;
 
     @Override
+    public String name() {
+        return "关于";
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);

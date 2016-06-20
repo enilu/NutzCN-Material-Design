@@ -29,4 +29,9 @@ public class LicenseActivity extends BaseActivity {
 
         tvLicense.setText(DocumentUtils.getString(this, R.raw.open_source));
     }
+
+    @Override
+    public String name() {
+        return "开源协议";
+    }
 }

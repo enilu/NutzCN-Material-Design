@@ -75,4 +75,8 @@ public class QrCodeActivity extends BaseActivity implements QRCodeReaderView.OnQ
     public void QRCodeNotFoundOnCamImage() {
     }
 
+    @Override
+    public String name() {
+        return "二维码界面";
+    }
 }
