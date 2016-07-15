@@ -28,7 +28,7 @@ android {
         applicationId "net.wendal.nutzbook"
         minSdkVersion 15
         targetSdkVersion 22
-        versionName "3.2.9"
+        versionName "3.3.0"
         signingConfig signingConfigs.NutzCN
         versionCode Integer.parseInt(tt)
         vectorDrawables.useSupportLibrary = true
