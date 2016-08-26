@@ -26,16 +26,14 @@ public final class LoginShared {
     private static final String KEY_CREATE_AT = "create_at";
     private static final String KEY_SCORE = "score";
 
-    private static final String KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API = "permit_use_third_party_image_upload_api";
+//    private static final String KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API = "permit_use_third_party_image_upload_api";
 
     public static void login(final Context context, String accessToken, final @NonNull LoginInfo loginInfo) {
-        Log.i("JPUSH", "alais=u_" + loginInfo.getId());
         SharedWrapper.with(context, TAG).setString(KEY_ACCESS_TOKEN, accessToken);
         SharedWrapper.with(context, TAG).setString(KEY_ID, loginInfo.getId());
         SharedWrapper.with(context, TAG).setString(KEY_LOGIN_NAME, loginInfo.getLoginName());
         SharedWrapper.with(context, TAG).setString(KEY_AVATAR_URL, loginInfo.getAvatarUrl());
-        //JPushInterface.setAlias(context, "u_" + loginInfo.getId(), null);
-        MiPushClient.setAlias(context, "u_" + loginInfo.getId(), null);
+        setPushAlias(context);
     }
 
     public static void update(Context context, @NonNull User user) {
@@ -47,6 +45,7 @@ public final class LoginShared {
     }
 
     public static void logout(Context context) {
+        unsetPushAlias(context);
         SharedWrapper.with(context, TAG).clear();
     }
 
@@ -56,6 +55,18 @@ public final class LoginShared {
 
     public static String getId(Context context) {
         return SharedWrapper.with(context, TAG).getString(KEY_ID, null);
+    }
+
+    public static void setPushAlias(Context context){
+        Log.i("xmpush", "alais=u_" + LoginShared.getId(context));
+        if (LoginShared.getId(context) != null) {
+            MiPushClient.setAlias(context, "u_"+LoginShared.getId(context), null);
+        }
+    }
+    public static void unsetPushAlias(Context context){
+        if (LoginShared.getId(context) != null) {
+            MiPushClient.unsetAlias(context, "u_"+LoginShared.getId(context), null);
+        }
     }
 
     public static String getLoginName(Context context) {
@@ -83,12 +94,12 @@ public final class LoginShared {
         return SharedWrapper.with(context, TAG).getInt(KEY_SCORE, 0);
     }
 
-    public static boolean isPermitUseThirdPartyImageUploadApi(Context context) {
-        return SharedWrapper.with(context, TAG).getBoolean(KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API, false);
-    }
-
-    public static void setPermitUseThirdPartyImageUploadApi(Context context, boolean enable) {
-        SharedWrapper.with(context, TAG).setBoolean(KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API, enable);
-    }
+//    public static boolean isPermitUseThirdPartyImageUploadApi(Context context) {
+//        return SharedWrapper.with(context, TAG).getBoolean(KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API, false);
+//    }
+//
+//    public static void setPermitUseThirdPartyImageUploadApi(Context context, boolean enable) {
+//        SharedWrapper.with(context, TAG).setBoolean(KEY_PERMIT_USE_THIRD_PARTY_IMAGE_UPLOAD_API, enable);
+//    }
 
 }

@@ -133,6 +133,8 @@ public class TopicActivity extends BaseActivity implements SwipeRefreshLayout.On
         RefreshLayoutUtils.initOnCreate(refreshLayout, this);
         RefreshLayoutUtils.refreshOnCreate(refreshLayout, this);
 
+
+
         //参数1为当前Activity，参数2为开发者在QQ互联申请的APP ID，参数3为开发者在QQ互联申请的APP kEY.
         //UMQQSsoHandler qqSsoHandler = new UMQQSsoHandler(this, "101254640","d29cbc0ba12ea0b04acf2f3b8b2689ac");
         //qqSsoHandler.addToSocialSDK();

@@ -67,5 +67,10 @@
 -keep interface u.** { *; }
 -keep interface uk.** { *; }
 
+# xiaomi
+-keep class com.xiaomi.** { *; }
+-dontwarn com.xiaomi.**
+
+-keep class com.google.gson.** {*;}
 
 -keep interface net.wendal.nutzbook.** { *; }

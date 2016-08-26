@@ -28,22 +28,32 @@ public class QrCodeActivity extends BaseActivity implements QRCodeReaderView.OnQ
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrcode);
         ButterKnife.bind(this);
-
         toolbar.setNavigationOnClickListener(new NavigationFinishClickListener(this));
 
         qrCodeReaderView.setOnQRCodeReadListener(this);
+        // Use this function to enable/disable decoding
+        qrCodeReaderView.setQRDecodingEnabled(true);
+
+        // Use this function to change the autofocus interval (default is 5 secs)
+        qrCodeReaderView.setAutofocusInterval(1000L);
+
+        // Use this function to enable/disable Torch
+        qrCodeReaderView.setTorchEnabled(true);
+
+        // Use this function to set back camera preview
+        qrCodeReaderView.setBackCamera();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        qrCodeReaderView.getCameraManager().startPreview();
+        qrCodeReaderView.startCamera();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        qrCodeReaderView.getCameraManager().stopPreview();
+        qrCodeReaderView.stopCamera();
     }
 
     @Override
@@ -52,27 +62,6 @@ public class QrCodeActivity extends BaseActivity implements QRCodeReaderView.OnQ
         intent.putExtra("qrcode", text);
         setResult(RESULT_OK, intent);
         finish();
-    }
-
-    @Override
-    public void cameraNotFound() {
-        new MaterialDialog.Builder(this)
-                .content(R.string.can_not_open_camera)
-                .positiveText(R.string.confirm)
-                .cancelListener(new DialogInterface.OnCancelListener() {
-
-                    @Override
-                    public void onCancel(DialogInterface dialog) {
-                        setResult(RESULT_CANCELED);
-                        finish();
-                    }
-
-                })
-                .show();
-    }
-
-    @Override
-    public void QRCodeNotFoundOnCamImage() {
     }
 
     @Override

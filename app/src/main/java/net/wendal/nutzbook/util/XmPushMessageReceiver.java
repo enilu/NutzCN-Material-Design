@@ -3,6 +3,7 @@ package net.wendal.nutzbook.util;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.xiaomi.market.sdk.XiaomiUpdateAgent;
 import com.xiaomi.mipush.sdk.ErrorCode;
 import com.xiaomi.mipush.sdk.MiPushClient;
 import com.xiaomi.mipush.sdk.MiPushCommandMessage;
@@ -35,6 +36,13 @@ public class XmPushMessageReceiver extends PushMessageReceiver {
             String action = json.get("action");
             if (topic_id != null && "open_topic".equals(action))
                 TopicActivity.open(context, topic_id);
+            else if ("upgrade".equals(action)) {
+                try {
+                    XiaomiUpdateAgent.update(context);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

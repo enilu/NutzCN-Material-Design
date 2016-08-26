@@ -129,13 +129,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
         RefreshLayoutUtils.initOnCreate(refreshLayout, this);
         RefreshLayoutUtils.refreshOnCreate(refreshLayout, this);
 
-        // fir.im更新
-
-        Log.i("xmpush", "alais=u_" + LoginShared.getId(this));
-        if (LoginShared.getId(this) != null) {
-            //JPushInterface.setAlias(this, "u_"+LoginShared.getId(this), null);
-            MiPushClient.setAlias(this, "u_"+LoginShared.getId(this), null);
-        }
+        LoginShared.setPushAlias(this);
     }
 
     @Override

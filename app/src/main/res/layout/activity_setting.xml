@@ -185,7 +185,17 @@
 
             <View style="@style/AppTheme.DeepLine" />
 
+            <TextView
+                android:id="@+id/setting_btn_clear_avatar_cache"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@string/clear_avatar_cache"
+                android:textColor="@color/setting_item_title_text_color"
+                android:textSize="16sp"
+                android:background="@drawable/selectable_item_background" />
 
+            <View style="@style/AppTheme.DeepLine" />
         </LinearLayout>
 
     </ScrollView>

@@ -15,10 +15,12 @@
         <div class="header">
             <h4 id="topic-title">加载中...</h4>
             <div class="topic-header">
-                <img class="avatar float-left" id="author-avatar" src="comment_profile_mars.png">
-                <div class="user-info float-left">
-                    <span id="name">Author</span>
-                    <span id="pub-time">发布于:0分钟前</span>
+                <div id="topicAuthor">
+                    <img class="avatar float-left" id="author-avatar" src="comment_profile_mars.png">
+                    <div class="user-info float-left">
+                        <span id="name">Author</span>
+                        <span id="pub-time">发布于:0分钟前</span>
+                    </div>
                 </div>
                 <div class="user-info float-right text-align-right">
                     <span id="topic-type">问答</span>
@@ -126,6 +128,10 @@
             setTimeout(function(){
                 window.nutz.stopRefresh();
             }, 600);
+
+            $("#topicAuthor").click(function(){
+                window.nutz.goUserInfo(author.loginname);
+            });
         }
 
         //添加回复

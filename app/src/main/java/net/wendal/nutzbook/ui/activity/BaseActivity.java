@@ -18,7 +18,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        MiStatInterface.recordPageEnd();
+        MiStatInterface.recordPageEnd(this, name());
     }
 
 }

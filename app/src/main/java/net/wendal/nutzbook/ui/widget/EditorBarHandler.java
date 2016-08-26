@@ -1,5 +1,7 @@
 package net.wendal.nutzbook.ui.widget;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.MimeTypeMap;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialdialogs.MaterialDialog;
@@ -36,11 +39,32 @@ public class EditorBarHandler {
     private EditText edtContent;
     private InputMethodManager imm;
 
+    protected ClipboardManager mClipboard;
+
     public EditorBarHandler(Context context, View editorBar, EditText edtContent) {
         this.context = context;
         this.edtContent = edtContent;
         imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        mClipboard = (ClipboardManager)context.getSystemService(Context.CLIPBOARD_SERVICE);
         ButterKnife.bind(this, editorBar);
+    }
+    /**
+     * 粘贴
+     */
+    @OnClick(R.id.editor_bar_btn_paste)
+    protected  void onBtnPaste() {
+        if (!mClipboard.hasPrimaryClip()) {
+            Toast.makeText(context, "剪贴板里面没内容", Toast.LENGTH_SHORT);
+            return;
+        }
+        ClipData clipData = mClipboard.getPrimaryClip();
+        int count = clipData.getItemCount();
+        if (count == 0)
+            return;
+        ClipData.Item t = clipData.getItemAt(0);
+        StringBuilder sb = new StringBuilder(edtContent.getText());
+        sb.insert(edtContent.getSelectionStart(), t.coerceToText(context));
+        edtContent.setText(sb.toString(), TextView.BufferType.EDITABLE);
     }
 
     /**
@@ -52,63 +76,6 @@ public class EditorBarHandler {
         edtContent.getText().insert(edtContent.getSelectionEnd(), "**string**");
         edtContent.setSelection(edtContent.getSelectionEnd() - 8, edtContent.getSelectionEnd() - 2);
         imm.showSoftInput(edtContent, 0);
-    }
-
-    /**
-     * 倾斜
-     */
-    @OnClick(R.id.editor_bar_btn_format_italic)
-    protected void onBtnFormatItalicClick() {
-        edtContent.requestFocus();
-        edtContent.getText().insert(edtContent.getSelectionEnd(), "*string*");
-        edtContent.setSelection(edtContent.getSelectionEnd() - 7, edtContent.getSelectionEnd() - 1);
-        imm.showSoftInput(edtContent, 0);
-    }
-
-    /**
-     * 引用
-     */
-    @OnClick(R.id.editor_bar_btn_format_quote)
-    protected void onBtnFormatQuoteClick() {
-        edtContent.requestFocus();
-        edtContent.getText().insert(edtContent.getSelectionEnd(), "\n\n> ");
-        edtContent.setSelection(edtContent.getSelectionEnd());
-    }
-
-    /**
-     * 无序列表
-     */
-    @OnClick(R.id.editor_bar_btn_format_list_bulleted)
-    protected void onBtnFormatListBulletedClick() {
-        edtContent.requestFocus();
-        edtContent.getText().insert(edtContent.getSelectionEnd(), "\n\n- ");
-        edtContent.setSelection(edtContent.getSelectionEnd());
-    }
-
-    /**
-     * 有序列表 TODO 这里算法需要优化
-     */
-    @OnClick(R.id.editor_bar_btn_format_list_numbered)
-    protected void onBtnFormatListNumberedClick() {
-        edtContent.requestFocus();
-        // 查找向上最近一个\n
-        for (int n = edtContent.getSelectionEnd() - 1; n >= 0; n--) {
-            char c = edtContent.getText().charAt(n);
-            if (c == '\n') {
-                try {
-                    int index = Integer.parseInt(edtContent.getText().charAt(n + 1) + "");
-                    if (edtContent.getText().charAt(n + 2) == '.' && edtContent.getText().charAt(n + 3) == ' ') {
-                        edtContent.getText().insert(edtContent.getSelectionEnd(), "\n\n" + (index + 1) + ". ");
-                        return;
-                    }
-                } catch (Exception e) {
-                    // TODO 这里有问题是如果数字超过10，则无法检测，未来逐渐优化
-                }
-            }
-        }
-        // 没找到
-        edtContent.getText().insert(edtContent.getSelectionEnd(), "\n\n1. ");
-        edtContent.setSelection(edtContent.getSelectionEnd());
     }
 
     /**
@@ -150,7 +117,7 @@ public class EditorBarHandler {
     }
 
     /**
-     * 插入图片 TODO 图片上传接口使用第三方实现
+     * 插入图片
      */
     @OnClick(R.id.editor_bar_btn_insert_photo)
     protected void onBtnInsertPhotoClick() {

@@ -12,8 +12,11 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <uses-permission android:name="com.xiaomi.market.sdk.UPDATE" />
+    <uses-permission android:name="com.xiaomi.permission.AUTH_SERVICE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
 
     <application
         android:name=".app.AppController"
@@ -87,11 +90,8 @@
             android:label="@string/about"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.FitsStatusBar" />
-        <activity
-            android:name=".ui.activity.LicenseActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/open_source_license"
-            android:screenOrientation="portrait" />
+
+        <activity android:name="com.xiaomi.account.openauth.AuthorizeActivity" />
 
         <!-- xiaomi push -->
         <service

@@ -1,15 +1,21 @@
 package net.wendal.nutzbook.ui.activity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.rey.material.widget.Switch;
+import com.squareup.picasso.Cache;
+import com.squareup.picasso.Picasso;
 
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.storage.SettingShared;
 import net.wendal.nutzbook.ui.listener.NavigationFinishClickListener;
+
+import java.lang.reflect.Field;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -52,7 +58,6 @@ public class SettingActivity extends BaseActivity implements Switch.OnCheckedCha
         switchNotification.setOnCheckedChangeListener(this);
         switchNewTopicDraft.setOnCheckedChangeListener(this);
         switchTopicSign.setOnCheckedChangeListener(this);
-        //switchThirdPartyImageUploadApi.setOnCheckedChangeListener(this);
     }
 
     @OnClick(R.id.setting_btn_notification)
@@ -103,6 +108,20 @@ public class SettingActivity extends BaseActivity implements Switch.OnCheckedCha
     protected void onBtnModifyTopicSignClick() {
         startActivity(new Intent(this, ModifyTopicSignActivity.class));
     }
+
+    @OnClick(R.id.setting_btn_clear_avatar_cache)
+    protected void onBtnClearAvatarCacheClick() {
+        Picasso picasso = Picasso.with(this);
+        try {
+            Field field = Picasso.class.getDeclaredField("cache");
+            field.setAccessible(true);
+            ((Cache)field.get(picasso)).clear();
+            Toast.makeText(this, "搞定^_^", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(this, "失败-_-", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     @Override
     public String name() {
         return "配置界面";

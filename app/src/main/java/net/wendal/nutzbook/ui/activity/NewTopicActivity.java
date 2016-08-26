@@ -79,7 +79,7 @@ public class NewTopicActivity extends BaseActivity implements Toolbar.OnMenuItem
             edtTitle.setSelection(edtTitle.length()); // 这个必须最后调用
         }
 
-        this.registerForContextMenu(findViewById(R.id.new_topic_edt_content));
+        //this.registerForContextMenu(findViewById(R.id.new_topic_edt_content));
         mClipboard = (ClipboardManager)getSystemService(Context.CLIPBOARD_SERVICE);
     }
 
