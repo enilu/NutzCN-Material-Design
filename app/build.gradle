@@ -23,7 +23,7 @@ android {
         }
     }
     compileSdkVersion 24
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "25.0.2"
     defaultConfig {
         applicationId "net.wendal.nutzbook"
         minSdkVersion 15
@@ -50,6 +50,7 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
     repositories {
+	    maven { url "https://jfrog.nutz.cn/artifactory/jcenter"}
         maven { url "https://jitpack.io" }
     }
     productFlavors {
