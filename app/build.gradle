@@ -28,7 +28,7 @@ android {
         applicationId "net.wendal.nutzbook"
         minSdkVersion 15
         targetSdkVersion 22
-        versionName "3.3.3"
+        versionName "5.0.5"
         signingConfig signingConfigs.NutzCN
         versionCode Integer.parseInt(tt)
         vectorDrawables.useSupportLibrary = true
@@ -50,8 +50,9 @@ android {
         exclude 'META-INF/NOTICE.txt'
     }
     repositories {
-	    maven { url "https://jfrog.nutz.cn/artifactory/jcenter"}
+        jcenter()
         maven { url "https://jitpack.io" }
+        maven { url "http://jfrog.nutz.cn/artifactory/jcenter"}
     }
     productFlavors {
     }
@@ -80,7 +81,7 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.3.0'
     compile 'com.github.rey5137:material:1.2.1'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile('com.afollestad.material-dialogs:core:0.8.5.5@aar') { transitive = true }
+    compile('com.afollestad.material-dialogs:core:0.8.5.9') { transitive = true }
     compile 'com.pnikosis:materialish-progress:1.7'
     compile 'com.melnykov:floatingactionbutton:1.3.0'
     compile 'com.dlazaro66.qrcodereaderview:qrcodereaderview:2.0.1'
