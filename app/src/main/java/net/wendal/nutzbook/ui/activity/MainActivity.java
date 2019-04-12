@@ -9,7 +9,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckedTextView;
@@ -20,7 +19,6 @@ import android.widget.Toast;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.melnykov.fab.FloatingActionButton;
 import com.squareup.picasso.Picasso;
-import com.xiaomi.mipush.sdk.MiPushClient;
 
 import net.wendal.nutzbook.R;
 import net.wendal.nutzbook.model.api.ApiClient;
@@ -72,12 +70,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     // 主要导航项
     @Bind({
-            R.id.main_nav_btn_ask,
+            R.id.main_nav_btn_duanzi,
             R.id.main_nav_btn_news,
-            R.id.main_nav_btn_share,
+            R.id.main_nav_btn_pic,
             R.id.main_nav_btn_nb,
-            R.id.main_nav_btn_shortit,
-            R.id.main_nav_btn_job
     })
     protected List<CheckedTextView> navMainItemList;
 
@@ -98,7 +94,7 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
     protected ViewGroup layoutNoData;
 
     // 当前版块，默认为all
-    private TabType currentTab = TabType.ask;
+    private TabType currentTab = TabType.duanzi;
     private int currentPage = 0; // 从未加载
     private List<Topic> topicList = new ArrayList<>();
     private MainAdapter adapter;
@@ -289,32 +285,24 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
      * 主导航项单击事件
      */
     @OnClick({
-            R.id.main_nav_btn_ask,
+            R.id.main_nav_btn_duanzi,
             R.id.main_nav_btn_news,
-            R.id.main_nav_btn_share,
+            R.id.main_nav_btn_pic,
             R.id.main_nav_btn_nb,
-            R.id.main_nav_btn_shortit,
-            R.id.main_nav_btn_job
     })
     public void onNavigationMainItemClick(CheckedTextView itemView) {
         switch (itemView.getId()) {
-            case R.id.main_nav_btn_nb:
-                drawerLayout.setDrawerListener(tabNBDrawerListener);
-                break;
-            case R.id.main_nav_btn_shortit:
-                drawerLayout.setDrawerListener(tabShortitDrawerListener);
-                break;
-            case R.id.main_nav_btn_share:
-                drawerLayout.setDrawerListener(tabShareDrawerListener);
-                break;
-            case R.id.main_nav_btn_ask:
-                drawerLayout.setDrawerListener(tabAskDrawerListener);
-                break;
-            case R.id.main_nav_btn_job:
-                drawerLayout.setDrawerListener(tabJobDrawerListener);
+            case R.id.main_nav_btn_duanzi:
+                drawerLayout.setDrawerListener(tabDuanziDrawerListener);
                 break;
             case R.id.main_nav_btn_news:
                 drawerLayout.setDrawerListener(tabNewsDrawerListener);
+                break;
+            case R.id.main_nav_btn_pic:
+                drawerLayout.setDrawerListener(tabPicDrawerListener);
+                break;
+            case R.id.main_nav_btn_nb:
+                drawerLayout.setDrawerListener(tabNbDrawerListener);
                 break;
             default:
                 drawerLayout.setDrawerListener(openDrawerListener);
@@ -351,12 +339,10 @@ public class MainActivity extends BaseActivity implements SwipeRefreshLayout.OnR
 
     }
 
-    private DrawerLayout.DrawerListener tabAskDrawerListener = new MainItemDrawerListener(TabType.ask);
+    private DrawerLayout.DrawerListener tabDuanziDrawerListener = new MainItemDrawerListener(TabType.duanzi);
     private DrawerLayout.DrawerListener tabNewsDrawerListener = new MainItemDrawerListener(TabType.news);
-    private DrawerLayout.DrawerListener tabNBDrawerListener = new MainItemDrawerListener(TabType.nb);
-    private DrawerLayout.DrawerListener tabShortitDrawerListener = new MainItemDrawerListener(TabType.shortit);
-    private DrawerLayout.DrawerListener tabShareDrawerListener = new MainItemDrawerListener(TabType.share);
-    private DrawerLayout.DrawerListener tabJobDrawerListener = new MainItemDrawerListener(TabType.job);
+    private DrawerLayout.DrawerListener tabPicDrawerListener = new MainItemDrawerListener(TabType.pic);
+    private DrawerLayout.DrawerListener tabNbDrawerListener = new MainItemDrawerListener(TabType.nb);
 
     /**
      * 次要菜单导航

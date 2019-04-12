@@ -5,17 +5,10 @@ import net.wendal.nutzbook.R;
 public enum TabType {
 
 
-    ask(R.string.tab_ask),
-
+    duanzi(R.string.tab_duanzi),
     news(R.string.tab_news),
-
-    share(R.string.tab_share),
-
-    job(R.string.tab_job),
-
     nb(R.string.tab_nb),
-
-    shortit(R.string.tab_shortit);
+    pic(R.string.tab_pic);
 
     private int nameId;
 

@@ -17,15 +17,15 @@ android {
         NutzCN {
             //
             keyAlias 'nutzcn'
-            keyPassword properties.getProperty("key.password")
-            storeFile file('nutzcn.keystore')
-            storePassword properties.getProperty("key.password")
+            keyPassword '123456'
+            storeFile file('nutzcn.jks')
+            storePassword '123456'
         }
     }
     compileSdkVersion 24
-    //buildToolsVersion "25.0.2"
+    buildToolsVersion "25.0.2"
     defaultConfig {
-        applicationId "net.wendal.nutzbook"
+        applicationId "itdog.enilu.cn"
         minSdkVersion 15
         targetSdkVersion 22
         versionName "5.0.5"

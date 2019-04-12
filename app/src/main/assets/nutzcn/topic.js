@@ -48,18 +48,12 @@ function reply(authorName, replyId){
 function topicType(isTop, origin){
     if(isTop){
         return "置顶";
-    }else if(origin == "ask"){
-        return "问答";
+    }else if(origin == "duanzi"){
+        return "段子";
     }else if(origin == "news"){
-        return "新闻";
-    }else if(origin == "share"){
-        return "分享";
-    }else if(origin == "job"){
-        return "招聘";
-    }else if(origin == "nb"){
-        return "灌水";
-    }else if(origin == "shortit"){
-            return "短点";
+        return "新鲜事";
+    }else if(origin == "good"){
+        return "精华";
     }else{
         return "其他"
     }

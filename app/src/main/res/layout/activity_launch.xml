@@ -17,7 +17,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="17dp"
         android:gravity="center_horizontal"
-        android:text="Nutz社区@nutz.cn"
+        android:text="程序员段子@itdog"
         android:textColor="#b3ffffff"
         android:textSize="10sp" />
 

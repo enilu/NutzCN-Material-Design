@@ -78,36 +78,21 @@
 
 
     <CheckedTextView style="@style/AppTheme.NavigationItem"
-        android:id="@+id/main_nav_btn_ask"
+        android:id="@+id/main_nav_btn_duanzi"
         android:drawableStart="@drawable/main_nav_ic_ask"
         android:drawableLeft="@drawable/main_nav_ic_ask"
-        android:text="@string/tab_ask"
+        android:text="@string/tab_duanzi"
         android:checked="true"/>
-
+    <CheckedTextView style="@style/AppTheme.NavigationItem"
+        android:id="@+id/main_nav_btn_pic"
+        android:drawableStart="@drawable/main_nav_ic_good"
+        android:drawableLeft="@drawable/main_nav_ic_good"
+        android:text="@string/tab_pic" />
     <CheckedTextView style="@style/AppTheme.NavigationItem"
         android:id="@+id/main_nav_btn_news"
         android:drawableStart="@drawable/main_nav_ic_ask"
         android:drawableLeft="@drawable/main_nav_ic_ask"
         android:text="@string/tab_news"/>
-
-    <CheckedTextView style="@style/AppTheme.NavigationItem"
-        android:id="@+id/main_nav_btn_share"
-        android:drawableStart="@drawable/main_nav_ic_good"
-        android:drawableLeft="@drawable/main_nav_ic_good"
-        android:text="@string/tab_share" />
-
-    <CheckedTextView style="@style/AppTheme.NavigationItem"
-        android:id="@+id/main_nav_btn_shortit"
-        android:drawableStart="@drawable/main_nav_ic_good"
-        android:drawableLeft="@drawable/main_nav_ic_good"
-        android:text="@string/tab_shortit" />
-
-    <CheckedTextView style="@style/AppTheme.NavigationItem"
-        android:id="@+id/main_nav_btn_job"
-        android:drawableStart="@drawable/main_nav_ic_job"
-        android:drawableLeft="@drawable/main_nav_ic_job"
-        android:text="@string/tab_job" />
-
     <CheckedTextView style="@style/AppTheme.NavigationItem"
         android:id="@+id/main_nav_btn_nb"
         android:drawableStart="@drawable/main_nav_ic_job"

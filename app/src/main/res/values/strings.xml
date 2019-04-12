@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Nutz社区</string>
+    <string name="app_name">程序员段子</string>
 
-    <string name="logo_url">nutz.cn</string>
-    <string name="logo_slogan">Nutz社区</string>
+    <string name="logo_url">enilu.cn</string>
+    <string name="logo_slogan">程序员段子</string>
 
     <string name="tab_top">置顶</string>
     <string name="tab_ask">问答</string>
-    <string name="tab_news">新闻</string>
+    <string name="tab_duanzi">段子</string>
+    <string name="tab_news">新鲜事</string>
+    <string name="tab_pic">无聊图</string>
     <string name="tab_share">分享</string>
     <string name="tab_job">招聘</string>
     <string name="tab_shortit">短点</string>
@@ -62,8 +64,8 @@
 
     <string name="version_check_update">检查更新</string>
     <string name="current_version_$">当前版本：</string>
-    <string name="about_cnode">关于Nutz社区</string>
-    <string name="about_cnode_content">https://nutz.cn/yvr/links/about.html</string>
+    <string name="about_cnode">关于程序员段子</string>
+    <string name="about_cnode_content">http://enilu.cn</string>
     <string name="about_author">关于原作者</string>
     <string name="about_author_content">http://blog.takwolf.com/about</string>
     <string name="advice_feedback">意见反馈</string>
@@ -72,7 +74,7 @@
     <string name="open_in_app_store_content">觉得赞就给个好评吧!</string>
     <string name="go_to_app_store">去评分</string>
     <string name="open_source_license">开放源代码许可</string>
-    <string name="about_copyright">Copyright © 2015&#8211;2016 TakWolf, Wendal.</string>
+    <string name="about_copyright">Copyright © 2019–2019 enilu.cn</string>
 
     <string name="notice">通知</string>
     <string name="receive_notification">接收消息推送</string>

@@ -23,7 +23,7 @@
                     </div>
                 </div>
                 <div class="user-info float-right text-align-right">
-                    <span id="topic-type">问答</span>
+                    <span id="topic-type">段子</span>
                     <span id="view-info">0次浏览</span> 
                 </div>
             </div>
@@ -51,7 +51,7 @@
     <script id="reply" type="text/html">
         <div class="topic" id="topic_{{id}}">
             <div class="topic-header">
-                <img class="avatar small-avatar float-left" onClick="window.nutz.goUserInfo('{{author.loginname}}')" src="https://nutz.cn/yvr/u/{{author.loginname}}/avatar">
+                <img class="avatar small-avatar float-left" onClick="window.nutz.goUserInfo('{{author.loginname}}')" src="http://47.104.84.62:8080/yvr/u/{{author.loginname}}/avatar">
                 <div class="user-info float-left">
                     <span id="name">{{author.loginname}}</span>
                     <span id="pub-time"> • <b id="like_{{id}}">{{ups.length}}</b>赞</span>
@@ -92,7 +92,7 @@
             $("#pub-time").html("发布于:" + getDateDiff(topic.create_at.iMillis));
             $("#view-info").html(topic.visit_count + "次浏览");
             $("#topic-content").html(topic.content);
-            $("#author-avatar").attr("src", "https://nutz.cn/yvr/u/"+author.loginname+"/avatar");
+            $("#author-avatar").attr("src", "http://47.104.84.62:8080/yvr/u/"+author.loginname+"/avatar");
             if(topic.good){
                 $("#jinghua").show();
             }
